@@ -1,6 +1,12 @@
 Rwatcher::Application.routes.draw do
   root :to => 'assets#index'
   get "assets/index"
+
+  namespace :api, :defaults => {format: :json} do
+    resources :requests
+    get "url-info" => 'requests#get_url_info'
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -41,7 +47,7 @@ Rwatcher::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'

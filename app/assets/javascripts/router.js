@@ -2,4 +2,5 @@
 
 Rwatcher.Router.map(function() {
   // this.resource('posts');
+    this.resource('index', { path: '/' });
 });

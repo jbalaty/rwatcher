@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.0'
 
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+#gem 'sqlite3'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -48,4 +48,9 @@ gem "active_model_serializers"
 gem "ember-rails", "~>0.14"
 gem "ember-source", "~>1.1"
 
+# Foundation CSS framework
 gem 'foundation-rails'
+# web scrapping library
+gem 'mechanize'
+#gem 'log4r'
+gem 'pg' # Postgres Driver

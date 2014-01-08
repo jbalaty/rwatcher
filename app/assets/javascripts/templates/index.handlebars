@@ -1,0 +1,53 @@
+<div class="row collapse">
+    <div class="columns">
+        <label for="url">Zadejte url, kterou chcete sledovat</label>
+    </div>
+</div>
+{{#each message in errors}}
+<div class="row collapse">
+    <div class="columns">
+        <div data-alert class="alert-box alert">
+            {{ message }}
+        </div>
+    </div>
+</div>
+{{/each}}
+<div class="row collapse">
+    <div class="small-9 columns">
+        {{input value=inputUrl id="url" placeholder="http://www.sreality.cz/hledani/prodej/domy?price_max=3000000"
+        focus-out="processUrl" insert-newline="processUrl"}}
+    </div>
+    <div class="small-3 columns">
+        {{#if showSummary}}
+        <button
+        {{action 'processUrl'}} class="button alert postfix">Změnit</button>
+        {{else}}
+        <button
+        {{action 'processUrl'}} class="button alert postfix">Odeslat</button>
+        {{/if}}
+    </div>
+</div>
+
+{{#if showSummary}}
+<div data-alert class="alert-box warning round">
+    Na této adrese jsme nalezli {{ adsCount }} inzerátů. Pokud je chcete sledovat, zadejte Vaši e-mailovou
+    adresu a odešlete.
+</div>
+<div class="row collapse">
+    <div class="small-9 columns">
+        {{input value=inputEmail id="email" placeholder="vaše e-mailová adresa, např. pepa.vomacka@seznam.cz"}}
+    </div>
+    <div class="small-3 columns">
+        <button
+        {{action 'submit'}} class="button postfix">Začít sledovat</button>
+    </div>
+</div>
+{{/if}}
+
+{{#if showConfirmation}}
+<div class="row collapse">
+    <div class="columns">
+        Sledování bylo úspěšně založeno
+    </div>
+</div>
+{{/if}}
