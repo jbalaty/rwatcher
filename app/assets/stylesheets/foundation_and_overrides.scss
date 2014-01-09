@@ -991,3 +991,8 @@
 // $topbar-sticky-class: ".sticky";
 // $topbar-arrows: true; //Set false to remove the triangle icon from the menu item
 @import 'foundation';
+
+.alert-box a {
+  color: white;
+  font-weight:bold;
+}

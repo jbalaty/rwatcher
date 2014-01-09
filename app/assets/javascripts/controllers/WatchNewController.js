@@ -16,7 +16,9 @@ function isEmailValid(email) {
     return true;
 }
 
-Rwatcher.IndexController = Ember.ObjectController.extend({
+Rwatcher.WatchNewController = Ember.ObjectController.extend({
+    needs:['index'],
+
     errors: [],
     showSummary: false,
     showConfirmation: false,
@@ -54,7 +56,7 @@ Rwatcher.IndexController = Ember.ObjectController.extend({
                 });
                 request.save()
                     .then(function (data) {
-                        self.transitionToRoute('ok', data);
+                        self.transitionToRoute('watch.ok',data);
                     }, function (reason) {
                         alert('nezdarilo se zalozit sledovani');
                     });

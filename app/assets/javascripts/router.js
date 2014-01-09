@@ -2,5 +2,8 @@
 
 Rwatcher.Router.map(function() {
   // this.resource('posts');
-    this.resource('index', { path: '/' });
+    this.resource('index', { path: '/' }, function(){
+    });
+    this.route('ok', {path: '/ok/:id'});
+
 });
