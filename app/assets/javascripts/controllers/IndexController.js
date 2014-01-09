@@ -17,6 +17,7 @@ function isEmailValid(email) {
 }
 
 Rwatcher.IndexController = Ember.ObjectController.extend({
+    assets: Rwatcher.Assets,
     errors: [],
     showSummary: false,
     showConfirmation: false,
