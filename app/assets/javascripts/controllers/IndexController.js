@@ -35,6 +35,7 @@ Rwatcher.IndexController = Ember.ObjectController.extend({
                 errors.clear();
                 self.set('adsCount', data.total)
                 self.set('showSummary', true);
+                this.$('#email').focus();
             }, function (reason) {
                 errors.clear();
                 console.log('error error!' + JSON.stringify(reason.responseJSON));
