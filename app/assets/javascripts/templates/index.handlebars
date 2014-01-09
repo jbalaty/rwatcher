@@ -1,6 +1,7 @@
 <div class="row collapse">
     <div class="columns">
-        <label for="url">Zadejte url, kterou chcete sledovat</label>
+        <h4 for="url">Zadejte url adresu výpisu, který chcete sledovat &nbsp;-&nbsp;
+            <a href="#" {{action 'showHelp'}}><b>nápověda</b></a></h4>
     </div>
 </div>
 {{#each message in errors}}
@@ -44,3 +45,28 @@
     </div>
 </div>
 {{/if}}
+
+<div id="help" class="row collapse"  style="display:none;">
+    <div class="columns">
+        <ol>
+            <li>otevřete si v novém okně stránky <a href="http://www.sreality.cz" target="_blank">www.sreality.cz</a>
+            </li>
+            <li>na stránkách SReality si najděte inzeráty, které vás zajímají, např. prodej bytů 2+kk<br/>
+                <img src="/assets/sr1.jpg">
+            </li>
+            <li>zkopírujte URL adresu z adresního řádku a vložte ji do připraveného pole<br/>
+                <img src="/assets/sr2.jpg"><br/>
+                <i><small>označte text, stiskněte pravé tlačítko a vyberte zkopírovat, případně označte text a stiskněte Ctrl+C</small></i>
+            </li>
+            <li>potvrďte stiskem tlačítka Odeslat</li>
+        </ol>
+    </div>
+</div>
+
+<div id="helpDialog" class="reveal-modal" data-reveal>
+    <h2><b>Jak na to</b></h2>
+
+    <iframe id="iframeSR"
+    {{bind-attr src=iframeUrl}} style="width:100%; min-height:500px;"></iframe>
+    <a class="close-reveal-modal">&#215;</a>
+</div>

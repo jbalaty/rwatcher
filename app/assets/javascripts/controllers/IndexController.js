@@ -21,6 +21,7 @@ Rwatcher.IndexController = Ember.ObjectController.extend({
     showSummary: false,
     showConfirmation: false,
     adsCount: 0,
+    iframeUrl: 'http://www.sreality.cz',
 
     actions: {
         processUrl: function () {
@@ -59,6 +60,9 @@ Rwatcher.IndexController = Ember.ObjectController.extend({
                         alert('nezdarilo se zalozit sledovani');
                     });
             }
+        },
+        showHelp: function () {
+            jQuery('#help').toggle();
         }
     }
 })
