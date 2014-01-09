@@ -26,7 +26,12 @@ class API::RequestsController < ApplicationController
 Chyba bude zřejmě na naší straně a nejsme schopni ji vyřešit ihned. Ale uložili jsme si ji a náš
 team se jí bude co nejdříve zabývat."
         else
-          return respond_with({total: page_info['total']})
+          if page_info['total'].to_i > 500
+            errors << "Počet inzerátů ke sledování je příliš velký ("+page_info['total'].to_s()+"),
+pokuste se více specifikovat oblast nebo cenu."
+          else
+            return respond_with({total: page_info['total']})
+          end
         end
       rescue
         errors << $!
@@ -60,7 +65,7 @@ team se jí bude co nejdříve zabývat."
   def create
     @request = Request.new(request_params)
     @request.save
-    respond_with(@request,location: nil)
+    respond_with(@request, location: nil)
   end
 
   # PATCH/PUT /requests/1
