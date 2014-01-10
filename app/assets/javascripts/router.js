@@ -5,5 +5,7 @@ Rwatcher.Router.map(function() {
     this.resource('index', { path: '/' }, function(){
     });
     this.route('ok', {path: '/ok/:id'});
+    this.route('about', {path: '/o-aplikaci'});
+    this.route('faq', {path: '/faq'});
 
 });

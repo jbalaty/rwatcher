@@ -1,7 +1,7 @@
 <div class="row collapse">
     <div class="columns">
-        <h4 for="url">Zadejte url adresu výpisu, který chcete sledovat &nbsp;-&nbsp;
-            <a href="#" {{action 'showHelp'}}><b>nápověda</b></a></h4>
+        <h5 for="url">Zadejte url adresu výpisu, který chcete sledovat &nbsp;-&nbsp;
+            <a href="#" {{action 'showHelp'}}><b>nápověda</b></a></h5>
     </div>
 </div>
 {{#each message in errors}}
@@ -33,10 +33,12 @@
 </div>
 
 {{#if showSummary}}
-<div data-alert class="alert-box round">
-    Na <a {{ bind-attr href=url }} target="_blank">zadané adrese</a> jsme nalezli {{ adsCount }} inzerátů. Pokud je
-    chcete sledovat, zadejte Vaši e-mailovou
-    adresu a odešlete.
+<div data-alert class="alert-box">
+    Na <a {{ bind-attr href=url }} target="_blank">zadané adrese</a> jsme nalezli
+    <strong>{{ adsCount }} inzerátů</strong>.
+    Pokud je chcete sledovat, zadejte Váš e-mail a odešlete.<br/>
+    Od toho okamžiku Vám budou na email chodit upozornění na
+    <strong>nové</strong> a <strong>změněné</strong> inzeráty.
 </div>
 <div class="row collapse">
     <div class="small-1 columns">
@@ -52,19 +54,25 @@
 </div>
 {{/if}}
 
-<div id="help" class="row collapse"  style="display:none;">
+<div id="help" class="row panel" style="display:none;">
     <div class="columns">
+        <a class="close-reveal-modal right" {{action 'showHelp'}}>&#215;</a>
         <ol>
             <li>otevřete si v novém okně <a href="http://www.sreality.cz" target="_blank">www.sreality.cz</a>
             </li>
-            <li>na stránkách SReality si najděte inzeráty, které vás zajímají, např. prodej bytů 2+kk<br/>
-                <img {{bind-attr src=assets.sr1}}>
+            <li>na stránkách SReality si najděte inzeráty, které vás zajímají, např. pronájem bytů
+                2+kk od 5 do 10 tisíc a potvrďte tlačítkem <strong>Vyhledat</strong><br/>
+                <img {{bind-attr src=assets.sr3}}>
             </li>
-            <li>zkopírujte URL adresu z adresního řádku a vložte ji do připraveného pole nahoře s označením Url<br/>
+            <li>zkopírujte URL adresu z adresního řádku a vložte ji do připraveného pole v
+                horní části této stránky s označením <strong>Url</strong><br/>
                 <img {{bind-attr src=assets.sr2}}><br/>
-                <i><small>označte text, stiskněte pravé tlačítko a vyberte zkopírovat, případně označte text a stiskněte Ctrl+C</small></i>
+                <i>
+                    <small>označte text, stiskněte pravé tlačítko a vyberte zkopírovat, případně
+                        označte text a stiskněte <kbd>Ctrl</kbd> + <kbd>C</kbd></small>
+                </i>
             </li>
-            <li>potvrďte stiskem tlačítka Odeslat</li>
+            <li>potvrďte tlačítkem <strong>Odeslat</strong></li>
         </ol>
     </div>
 </div>

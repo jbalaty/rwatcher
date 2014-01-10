@@ -1,6 +1,8 @@
 <header class="row">
     <div class="columns">
-        <a href="/"><h1><em><b style="color:red;">S</b>ledování realit</em></h1></a>
+        <h1><a href="/" style="color:inherit;"><em><b style="color:red;">S</b>ledování&nbsp;realit</em></a>
+        </h1>
+
     </div>
 </header>
 <div class="row">
@@ -8,8 +10,13 @@
         {{outlet}}
     </div>
 </div>
+        <br/>
 <footer class="row">
-    <div class="columns text-right">
-        &copy; 2014
+    <div class="columns text-center">
+        {{#link-to 'index'}}Hlavní stránka{{/link-to}}
+        &nbsp;&nbsp;&nbsp;
+        {{#link-to 'about'}}O službě{{/link-to}}
+        &nbsp;&nbsp;&nbsp;
+        {{#link-to 'faq'}}FAQ{{/link-to}}
     </div>
 </footer>
