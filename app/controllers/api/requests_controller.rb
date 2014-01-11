@@ -40,16 +40,19 @@ pokuste se více specifikovat oblast nebo cenu."
     return respond_with({errors: errors}, status: 400)
   end
 
-  # GET /requests
   # GET /requests.json
   def index
-    #@requests = Request.all
+    @requests = Request.where('token=?', params['token'])
+    return respond_with(@requests)
   end
 
   # GET /requests/1
   # GET /requests/1.json
-  def show
-  end
+  #def show
+  #  #@request = Request.find_by_token params['token']
+  #  @request = Request.new
+  #  respond_with @request
+  #end
 
   # GET /requests/new
   def new
@@ -85,8 +88,9 @@ pokuste se více specifikovat oblast nebo cenu."
   # DELETE /requests/1
   # DELETE /requests/1.json
   def destroy
-    #@request.destroy
-    #respond_with()
+    @request = Request.find(params[:id])
+    @request.destroy
+    respond_with()
   end
 
   private

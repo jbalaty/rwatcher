@@ -57,6 +57,7 @@ Rwatcher.IndexController = Ember.ObjectController.extend({
                 });
                 request.save()
                     .then(function (data) {
+                        self.set('showSummary', false);
                         self.transitionToRoute('ok', data);
                     }, function (reason) {
                         alert('nezdarilo se zalozit sledovani');

@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20130923174359) do
     t.integer  "numFailedAttempts",  default: 0
     t.datetime "firstFailedAttempt"
     t.string   "email"
+    t.string   "token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

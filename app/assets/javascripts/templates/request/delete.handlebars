@@ -1,0 +1,44 @@
+{{#each message in controllers.request.errors}}
+<div class="row collapse">
+    <div class="columns">
+        <div data-alert class="alert-box warning">
+            {{ message }}
+        </div>
+    </div>
+</div>
+{{/each}}
+{{#each message in errors}}
+<div class="row collapse">
+    <div class="columns">
+        <div data-alert class="alert-box warning">
+            {{ message }}
+        </div>
+    </div>
+</div>
+{{/each}}
+
+{{#unless isError}}
+<div class="row collapse">
+    <div class="columns">
+
+
+        <h4>Opravdu chcete smazat sledování s číslem: {{controllers.request.id}}?</h4>
+        {{#if showOk}}
+        <div data-alert class="alert-box success">
+            Sledování bylo vymazáno
+        </div>
+        {{else}}
+        <div class="text-center">
+            <button class="button small alert"
+            {{action 'proceed' controllers.request}}>ANO</button>
+            &nbsp;
+            <button class="button small secondary"
+            {{action 'cancel'}}>NE</button>
+        </div>
+        {{/if}}
+
+
+    </div>
+</div>
+{{/unless}}
+

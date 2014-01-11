@@ -5,7 +5,7 @@
     </div>
 </div>
 {{#each message in errors}}
-<div class="row collapse">
+<div class="row">
     <div class="columns">
         <div data-alert class="alert-box warning">
             {{ message }}
@@ -33,19 +33,24 @@
 </div>
 
 {{#if showSummary}}
-<div data-alert class="alert-box">
-    Na <a {{ bind-attr href=url }} target="_blank">zadané adrese</a> jsme nalezli
-    <strong>{{ adsCount }} inzerátů</strong>.
-    Pokud je chcete sledovat, zadejte Váš e-mail a odešlete.<br/>
-    Od toho okamžiku Vám budou na email chodit upozornění na
-    <strong>nové</strong> a <strong>změněné</strong> inzeráty.
+<div class="row">
+    <div class="columns">
+        <div data-alert class="alert-box">
+            Na <a {{ bind-attr href=url }} target="_blank">zadané adrese</a> jsme nalezli
+            <strong>{{ adsCount }} inzerátů</strong>.
+            Pokud je chcete sledovat, zadejte Váš e-mail a odešlete.<br/>
+            Od toho okamžiku Vám budou chodit upozornění na
+            <strong>nové</strong> a <strong>změněné</strong> inzeráty.
+        </div>
+    </div>
 </div>
 <div class="row collapse">
     <div class="small-1 columns">
         <span class="prefix">Email</span>
     </div>
     <div class="small-8 columns">
-        {{input value=email id="email" placeholder="vaše e-mailová adresa, např. pepa.vomacka@seznam.cz"}}
+        {{input value=email id="email" placeholder="vaše e-mailová adresa, např. pepa.vomacka@seznam.cz"
+        insert-newline="submit"}}
     </div>
     <div class="small-3 columns">
         <button
