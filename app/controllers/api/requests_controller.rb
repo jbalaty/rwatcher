@@ -68,6 +68,7 @@ pokuste se více specifikovat oblast nebo cenu."
   def create
     @request = Request.new(request_params)
     @request.save
+    RequestNotifier.NewRequestInfo(@request).deliver
     respond_with(@request, location: nil)
   end
 

@@ -21,5 +21,8 @@ module Rwatcher
     # config.i18n.default_locale = :cs
 
     config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
+
+    # mail templates default url
+    config.action_mailer.default_url_options = { host: "sledovani-realit.cz" }
   end
 end

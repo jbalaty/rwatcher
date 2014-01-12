@@ -1,0 +1,11 @@
+<h2>Nové sledování bylo úspěšně založeno</h2>
+<p>
+  Sledovaná adresa: <a href="<%= @request.url %>"><%= @request.url %></a>
+  <br/>
+  Upozornění budou zasílána na email:<%= @request.email %>
+  <br/>
+  ID sledování: <%= @request.url %>
+</p>
+<br/>
+<br/>
+Zrušit sledování můžete zde: <%= url_for(controller: "assets", action: "index", anchor: "request/"+@request.token+"/delete") %>

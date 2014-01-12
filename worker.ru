@@ -241,7 +241,7 @@ puts "Sending notification emails: #{requestNotifications.length}"
 requestNotifications.each do |k, v|
   begin
     puts "Sending email for request #{k.id}"
-    ChangeNotifier.SearchInfoChangeSummary(k, v).deliver
+    RequestNotifier.SearchInfoChangeSummary(k, v).deliver
   rescue
     puts $!, $@
   end
