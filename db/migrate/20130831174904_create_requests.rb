@@ -7,13 +7,10 @@ class CreateRequests < ActiveRecord::Migration
       t.integer :numFailedAttempts, default:0
       t.datetime :firstFailedAttempt
       t.string :email
-      t.string :token, length: 1024
 
       t.timestamps
 
     end
-
-    add_index :requests, [:url, :email], :unique=>true
 
     create_table :requests_search_infos do |t|
       t.belongs_to :search_info

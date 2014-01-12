@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130923174359) do
+ActiveRecord::Schema.define(version: 20140112145535) do
 
   create_table "ad_infos", force: true do |t|
     t.text     "urlNormalized"
@@ -64,9 +64,9 @@ ActiveRecord::Schema.define(version: 20130923174359) do
     t.integer  "numFailedAttempts",  default: 0
     t.datetime "firstFailedAttempt"
     t.string   "email"
-    t.string   "token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "token"
   end
 
   add_index "requests", ["url", "email"], name: "index_requests_on_url_and_email", unique: true, using: :btree
