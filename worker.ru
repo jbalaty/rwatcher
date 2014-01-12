@@ -133,7 +133,7 @@ end
 puts_divider
 puts "Processing new requests"
 puts_divider
-requests = Request.where('processed = :p', p: false)
+requests = Request.where('processed = :p AND state=:state', {p: false, state: 'active'})
 requests.each do |r|
   begin
     puts r.inspect

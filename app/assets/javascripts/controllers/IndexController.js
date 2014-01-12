@@ -21,6 +21,7 @@ Rwatcher.IndexController = Ember.ObjectController.extend({
     errors: [],
     showSummary: false,
     showConfirmation: false,
+    showPayedWarning: false,
     adsCount: 0,
     iframeUrl: 'http://www.sreality.cz',
     termsAgreement: true,
@@ -34,7 +35,8 @@ Rwatcher.IndexController = Ember.ObjectController.extend({
             // validate
             Ember.$.getJSON('/api/url-info', {url: inputUrl}).then(function (data) {
                 errors.clear();
-                self.set('adsCount', data.total)
+                self.set('adsCount', data.total);
+                self.set('showPayedWarning',data.total>100);
                 self.set('showSummary', true);
                 //Ember.$('#email').focus(); does not work
             }, function (reason) {

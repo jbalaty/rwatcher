@@ -11,33 +11,13 @@ class API::RequestsController < ApplicationController
     # test this url, it it is valid SReality url
     errors = []
     url = params[:url]
-    http_tool = HttpTool.new
-    sreality = Sreality.new http_tool
-    if url !~ URI::regexp
-      errors << "Nesprávná url adresa, zkontrolujte, zda-li začíná znaky \"http://\""
-    elsif !sreality.is_url_valid?(url)
-      errors << "Nesprávná url - můžete zadat pouze adresu vedoucí na server Sreality.cz,
-          např. \"http://www.sreality.cz/search?category_type_cb=1&category_main_cb=1...\""
+    page_info = do_check(url, errors)
+    if page_info
+      total = page_info['total']
+      return respond_with({total: total})
     else
-      begin
-        page_info = sreality.get_page_summary(url)
-        unless page_info
-          errors << "Bohužel náš systém nebyl schopen tuto adresu zpracovat.
-Chyba bude zřejmě na naší straně a nejsme schopni ji vyřešit ihned. Ale uložili jsme si ji a náš
-team se jí bude co nejdříve zabývat."
-        else
-          if page_info['total'].to_i > 500
-            errors << "Počet inzerátů ke sledování je příliš velký ("+page_info['total'].to_s()+"),
-pokuste se více specifikovat oblast nebo cenu."
-          else
-            return respond_with({total: page_info['total']})
-          end
-        end
-      rescue
-        errors << $!
-      end
+      return respond_with({errors: errors}, status: 400)
     end
-    return respond_with({errors: errors}, status: 400)
   end
 
   # GET /requests.json
@@ -66,10 +46,20 @@ pokuste se více specifikovat oblast nebo cenu."
   # POST /requests
   # POST /requests.json
   def create
+    errors = []
     @request = Request.new(request_params)
-    @request.save
-    RequestNotifier.NewRequestInfo(@request).deliver
-    respond_with(@request, location: nil)
+    page_info = do_check @request.url, errors
+    if page_info
+      total = page_info['total']
+      if total<= 100
+        @request.state = 'active'
+      end
+      @request.save
+      RequestNotifier.NewRequestInfo(@request).deliver
+      respond_with(@request, location: nil)
+    else
+      respond_with({errors: errors}, status: :unprocessable_entity)
+    end
   end
 
   # PATCH/PUT /requests/1
@@ -99,4 +89,28 @@ pokuste se více specifikovat oblast nebo cenu."
     params.require(:request).permit(:name, :url, :email)
   end
 
+  def do_check(url, errors)
+    http_tool = HttpTool.new
+    sreality = Sreality.new http_tool
+    if url !~ URI::regexp
+      errors << "Nesprávná url adresa, zkontrolujte, zda-li začíná znaky \"http://\""
+    elsif !sreality.is_url_valid?(url)
+      errors << "Nesprávná url - můžete zadat pouze adresu vedoucí na server Sreality.cz,
+          např. \"http://www.sreality.cz/search?category_type_cb=1&category_main_cb=1...\""
+    else
+      begin
+        page_info = sreality.get_page_summary(url)
+        unless page_info
+          errors << "Bohužel náš systém nebyl schopen tuto adresu zpracovat.
+Chyba bude zřejmě na naší straně a nejsme schopni ji vyřešit ihned. Ale uložili jsme si ji a náš
+team se jí bude co nejdříve zabývat."
+        else
+          return page_info
+        end
+      rescue
+        errors << $!
+      end
+    end
+    return nil
+  end
 end

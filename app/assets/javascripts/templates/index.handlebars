@@ -37,8 +37,15 @@
     <div class="columns">
         <div data-alert class="alert-box">
             Na <a {{ bind-attr href=url }} target="_blank">zadané adrese</a> jsme nalezli
-            <strong>{{ adsCount }} inzerátů</strong>.
-            Pokud je chcete sledovat, zadejte Váš e-mail a odešlete.<br/>
+            <strong>{{ adsCount }} inzerátů</strong>.<br/>
+            {{#if showPayedWarning}}
+            <strong><br/>
+                Do 100 inzerátů je naše služba zcela zdarma, pokud chcete sledovat více inzerátů,
+                je třeba si u nás objednat placený tarif. Více viz sekce {{#link-to 'faq' }}Často kladené
+                dotazy{{/link-to}}.<br/>
+            </strong><br/>
+            {{/if}}
+            Pokud chcete tyto inzeráty sledovat, zadejte Váš e-mail a odešlete.<br/>
             Od toho okamžiku Vám budou chodit upozornění na
             <strong>nové</strong> a <strong>změněné</strong> inzeráty.
         </div>
