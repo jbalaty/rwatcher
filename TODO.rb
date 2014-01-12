@@ -1,4 +1,4 @@
-# it is called .rb else Webstorm will not show it in his TODO window
+# it is called .rb else Webstorm will not show it in it's td window
 #TODO: chech conditions on free accounts
 #    - max number of ads in request
 #    - only one add per email
