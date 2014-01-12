@@ -1,6 +1,17 @@
 Rwatcher::Application.routes.draw do
+  #constraints(:host => /www.sledovani-realit.cz/) do
+  #  root :to => redirect("http://sledovani-realit.cz")
+  #  match '/*path', :to => redirect {|params| "http://sledovani-realit.cz/#{params[:path]}"}
+  #end
+  constraints(:host => /sledovani-realit.com/) do
+    match '/', :to => redirect("http://www.sledovani-realit.cz"), via: :all
+    match '/*path', :to => redirect {|params| "http://www.sledovani-realit.cz/#{params[:path]}"}, via: :all
+  end
+
   root :to => 'assets#index'
   get "assets/index"
+
+
 
   namespace :api, :defaults => {format: :json} do
     resources :requests
