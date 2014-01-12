@@ -9,4 +9,7 @@
 <% end %>
 <br/>
 <br/>
-Zrušit sledování můžete zde: <%= url_for(controller: "assets", action: "index", anchor: "request/"+@request.token+"/delete") %>
+Zrušit sledování můžete zde:
+<%= url_for(controller: "assets", action: "index",
+            anchor: "/request/"+@request.token+"/delete",
+            only_path: false) %>

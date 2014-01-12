@@ -87,4 +87,5 @@ Rwatcher::Application.configure do
   }
   #config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_options = {from: 'info@sledovani-realit.cz'}
+
 end

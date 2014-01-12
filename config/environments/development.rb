@@ -17,6 +17,7 @@ Rwatcher::Application.configure do
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.delivery_method = :test
   config.action_mailer.default_options = {from: 'info@sledovani-realit.cz'}
+  config.action_mailer.default_url_options = { :host => "sledovani-realit.cz" }
 
 
   # Print deprecation notices to the Rails logger.
