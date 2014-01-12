@@ -4,5 +4,4 @@
 #TODO: chech conditions on free accounts
 #    - max number of ads in request
 #    - only one add per email
-#TODO: Google Analytics
 #TODO: terms agreement

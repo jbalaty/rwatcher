@@ -17,6 +17,7 @@
 //= require handlebars
 //= require ember
 //= require ember-data
+//= require ember-google-analytics/ember-google-analytics
 //= require_self
 //= require assets
 //= require rwatcher
