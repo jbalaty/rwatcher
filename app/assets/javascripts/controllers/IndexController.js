@@ -23,6 +23,7 @@ Rwatcher.IndexController = Ember.ObjectController.extend({
     showConfirmation: false,
     adsCount: 0,
     iframeUrl: 'http://www.sreality.cz',
+    termsAgreement: true,
 
     actions: {
         processUrl: function () {
@@ -46,26 +47,34 @@ Rwatcher.IndexController = Ember.ObjectController.extend({
             var self = this;
             var errors = this.get('errors');
             errors.clear();
-            var inputUrl = this.get('url');
-            var inputEmail = this.get('email');
-            if (!isEmailValid(inputEmail)) {
-                errors.pushObject('Email není ve správném formátu');
-            } else {
-                var request = this.store.createRecord('request', {
-                    url: inputUrl,
-                    email: inputEmail
-                });
-                request.save()
-                    .then(function (data) {
-                        self.set('showSummary', false);
-                        self.transitionToRoute('ok', data);
-                    }, function (reason) {
-                        alert('nezdarilo se zalozit sledovani');
+            if (this.get('termsAgreement')) {
+                var inputUrl = this.get('url');
+                var inputEmail = this.get('email');
+                if (!isEmailValid(inputEmail)) {
+                    errors.pushObject('Email není ve správném formátu');
+                } else {
+                    var request = this.store.createRecord('request', {
+                        url: inputUrl,
+                        email: inputEmail
                     });
+                    request.save()
+                        .then(function (data) {
+                            self.set('showSummary', false);
+                            self.transitionToRoute('ok', data);
+                        }, function (reason) {
+                            errors.pushObject('Nezdařilo se založit sledování (' + reason.statusText + ')');
+                            //throw new Ember.Error('Nezdařilo se založit sledování.');
+                        });
+                }
+            } else {
+                errors.pushObject('Musíte potvrdit souhlas se smluvními podmínkami')
             }
         },
+        showTerms: function () {
+            $('#terms').foundation('reveal', 'open', '#about');
+        },
         showHelp: function () {
-            Ember.$('#help').toggle();
+            $('#help').toggle();
         }
     }
 })

@@ -10,7 +10,10 @@ class CreateRequests < ActiveRecord::Migration
       t.string :token, length: 1024
 
       t.timestamps
+
     end
+
+    add_index :requests, [:url, :email], :unique=>true
 
     create_table :requests_search_infos do |t|
       t.belongs_to :search_info

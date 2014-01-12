@@ -15,7 +15,7 @@
 {{/each}}
 <div class="row collapse">
     <div class="small-1 columns">
-        <span class="prefix">Adresa</span>
+        <span class="prefix">Url</span>
     </div>
     <div class="small-8 columns">
         {{input value=url id="url" placeholder="http://www.sreality.cz/hledani/prodej/domy?price_max=3000000"
@@ -44,6 +44,7 @@
         </div>
     </div>
 </div>
+
 <div class="row collapse">
     <div class="small-1 columns">
         <span class="prefix">Email</span>
@@ -57,35 +58,25 @@
         {{action 'submit'}} class="button postfix">Začít sledovat</button>
     </div>
 </div>
+<div class="row collapse">
+    <div class="columns small-offset-1">
+        {{input type="checkbox" id="termsAgreement" checked=termsAgreement}}
+        <label for="termsAgreement">souhlasím se
+            <a {{action 'showTerms'}}>smluvními podmínkami služby</a></label>
+    </div>
+</div>
 {{/if}}
 
 <div id="help" class="row panel" style="display:none;">
     <div class="columns">
         <a class="close-reveal-modal right" {{action 'showHelp'}}>&#215;</a>
-        <ol>
-            <li>otevřete si v novém okně <a href="http://www.sreality.cz" target="_blank">www.sreality.cz</a>
-            </li>
-            <li>na stránkách SReality si najděte inzeráty, které vás zajímají, např. pronájem bytů
-                2+kk od 5 do 10 tisíc a potvrďte tlačítkem <strong>Vyhledat</strong><br/>
-                <img {{bind-attr src=assets.sr3}}>
-            </li>
-            <li>zkopírujte URL adresu z adresního řádku a vložte ji do připraveného pole v
-                horní části této stránky s označením <strong>Url</strong><br/>
-                <img {{bind-attr src=assets.sr2}}><br/>
-                <i>
-                    <small>označte text, stiskněte pravé tlačítko a vyberte zkopírovat, případně
-                        označte text a stiskněte <kbd>Ctrl</kbd> + <kbd>C</kbd></small>
-                </i>
-            </li>
-            <li>potvrďte tlačítkem <strong>Odeslat</strong></li>
-        </ol>
+        {{partial 'help'}}
     </div>
 </div>
 
-<div id="helpDialog" class="reveal-modal" data-reveal>
-    <h2><b>Jak na to</b></h2>
-
-    <iframe id="iframeSR"
-    {{bind-attr src=iframeUrl}} style="width:100%; min-height:500px;"></iframe>
+<div id="terms" class="reveal-modal" data-reveal>
+    <div class="panel">
+        {{partial 'terms'}}
+    </div>
     <a class="close-reveal-modal">&#215;</a>
 </div>

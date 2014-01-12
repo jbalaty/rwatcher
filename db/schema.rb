@@ -69,6 +69,8 @@ ActiveRecord::Schema.define(version: 20130923174359) do
     t.datetime "updated_at"
   end
 
+  add_index "requests", ["url", "email"], name: "index_requests_on_url_and_email", unique: true, using: :btree
+
   create_table "requests_search_infos", force: true do |t|
     t.integer "search_info_id"
     t.integer "request_id"
