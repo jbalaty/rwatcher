@@ -8,6 +8,7 @@ class RequestNotifier < ActionMailer::Base
   #
   def NewRequestInfo(request)
     @request = request
+    @deleteUrl = get_delete_url(@request.token)
     mail to: request.email, subject: 'Nové sledování realit'
   end
 
@@ -16,7 +17,13 @@ class RequestNotifier < ActionMailer::Base
     @notifications = notifications.sort_by! do |n|
       [n.search_info.id, n.created_at]
     end
-    @deleteUrl =
-        mail to: request.email, subject: 'Nové inzeráty na SReality.cz'
+    @deleteUrl = get_delete_url(@request.token)
+    mail to: request.email, subject: 'Nové inzeráty na SReality.cz'
+  end
+
+  private
+  def get_delete_url(token)
+    url_for(controller: "assets", action: "index", anchor: "/request/"+token+"/delete",
+            only_path: false)
   end
 end

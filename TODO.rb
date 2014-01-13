@@ -2,4 +2,4 @@
 #TODO: chech conditions on free accounts
 #    - only one add per email
 #TODO: spam protection - SPF an maybe DKIM / Mailchimp integration
-#TODO: rewrite all links and email addresses from PCIN.cz and rwatcher.* to proper domain
+#TODO: rewrite worker - better scrapping algorithm

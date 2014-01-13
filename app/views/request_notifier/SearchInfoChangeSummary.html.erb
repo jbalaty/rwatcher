@@ -1,7 +1,6 @@
 <h2>Nové inzeráty <a href="<%= @request.url %>"><%= @request.title %></a></h2>
-<a href="<%= @request.url %>">link</a>
+Adresa SReality výpisu: <a href="<%= @request.url %>">odkaz</a>
 <% @notifications.each do |notification| %>
-
     <div>
       <%= sanitize(notification.ad_info.shortInfoHtml.gsub(/href="\//, 'href="http://www.sreality.cz/')
                    .gsub(/data-src/, 'src').gsub(/Přidat do oblíbených/, '')) %>
@@ -9,7 +8,5 @@
 <% end %>
 <br/>
 <br/>
-Zrušit sledování můžete zde:
-<%= url_for(controller: "assets", action: "index",
-            anchor: "/request/"+@request.token+"/delete",
-            only_path: false) %>
+Zrušit sledování můžete zde:<a href="<%= @deleteUrl %>">zde</a>
+
