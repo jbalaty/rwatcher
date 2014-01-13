@@ -34,6 +34,7 @@ Rwatcher = Ember.Application.create({
     LOG_TRANSITIONS_INTERNAL: true
 });
 
+// set global constants
 Ember.ControllerMixin.reopen({
     GLOBAL_DOMAIN:'sledovani-realit.cz'
 });

@@ -80,12 +80,16 @@ Rwatcher::Application.configure do
 
   # custom mailer settings
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-      address: 'localhost',
-      port: 25,
-      enable_starttls_auto: false
-  }
-  #config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_options = {from: 'info@sledovani-realit.cz'}
+
+  config.action_mailer.smtp_settings = {
+      :address   => "smtp.mandrillapp.com",
+      :port      => 25, # ports 587 and 2525 are also supported with STARTTLS
+      :enable_starttls_auto => true, # detects and uses STARTTLS
+      :user_name => "jiri.balaty@gmail.com",
+      :password  => "bdfzgUKmRNtoylWwaKkxtA", # SMTP password is any valid API key
+      :authentication => 'login', # Mandrill supports 'plain' or 'login'
+      :domain => 'sledovani-realit.cz', # your domain to identify your server when connecting
+  }
 
 end
