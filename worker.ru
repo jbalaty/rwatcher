@@ -119,7 +119,6 @@ requests.each do |r|
         puts 'Creating new SearchInfo'
         si = SearchInfo.new
         si.urlNormalized = urln
-        si.save!
         update_search_info si, sreality
       end
       # check if we have watched resource associated with this request
@@ -145,7 +144,7 @@ requests.each do |r|
     else
       raise 'Unknown request type'
     end
-    #r.processed = true
+    r.processed = true
     r.save!
   rescue Mechanize::ResponseCodeError => e
     puts e
