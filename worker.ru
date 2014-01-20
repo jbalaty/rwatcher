@@ -48,84 +48,57 @@ end
 
 def update_search_info(si, sreality)
   changed = false
-  extractedsi = sreality.extract_search_page_info(si.urlNormalized)
+  url = sreality.set_search_page_url_to_new_only(si.urlNormalized)
+  extractedsi = sreality.extract_search_page_info(url)
   ads = extractedsi['ads']
-  if si.resultsCount != ads.length or si.lastExternId != ads.first['externid']
-    changed = true
-  end
-  # old_ad_infos_arr = si.ad_infos.clone.to_a
-  # update all ads watched resources
-  hit_last_extern_id = false
-  last_extern_ids_changes_count = 0
-  ads.each do |ad_hash|
-    #tmp = ad_hash.select { |k| !['imageUrl'].include?(k)  }
-    tmp = ad_hash
-    tmp['lastCheckAt'] = DateTime.now
-    ai = AdInfo.find_by_externId ad_hash['externId']
-    unless ai
-      puts "Creating new AdInfo"
-      ai = AdInfo.create! tmp
-    else
-      #if ai.price != tmp['price']
-      #  # Ad change
-      #  puts "Creating new change - new ad (siid=#{si.id} and aiid=#{ai.id}) - ad change"
-      #  change = Change.new(changeType: 'search_info', changeSubtype: 'change_ad',
-      #                      dataBefore: ai.price, dataAfter: tmp['price'])
-      #  change.search_info_id = si.id
-      #  change.ad_info_id = ai.id
-      #  change.save!
-      #end
-
-      # check if we hit the last externId and stop generating changes, limit this to 10 else if the last externId ad
-      # was already removed, we will generate checks for the whole array
-      if !hit_last_extern_id && last_extern_ids_changes_count <= 50
-        last_extern_ids_changes_count += 1 #changes counter
-        if ai.externId == si.lastExternId
-          hit_last_extern_id = true
-        else
-          if ad_changed? ai, ad_hash
-            puts "Creating new change - new ad (siid=#{si.id} and aiid=#{ai.id})"
-            change = Change.new(changeType: 'search_info', changeSubtype: 'updated_ad')
-            change.search_info_id = si.id
-            change.ad_info_id = ai.id
-            change.save!
-          end
-        end
-      end
-      ai.update! tmp
-    end
-    # update links between search info resource and all ads in the search
-    unless si.ad_infos.include? ai
-      puts "Creating new link between SearchInfo and AdInfo - siid=#{si.id} and aiid=#{ai.id} - new ad"
-      # create
-      unless si.new_record?
-        # track this change
-        puts "Creating new change - new ad (siid=#{si.id} and aiid=#{ai.id})"
-        change = Change.new(changeType: 'search_info', changeSubtype: 'new_ad')
+  if ads.length == 0
+    changed = false
+  else
+    ads.each do |ad_hash|
+      tmp = ad_hash
+      tmp['lastCheckAt'] = DateTime.now
+      ai = AdInfo.where('"externId"=?', ad_hash['externId']).order('created_at DESC').first()
+      if ai == nil || ai.shortInfoHtml != ad_hash['shortInfoHtml']
+        changed = true
+        is_new = ai == nil
+        puts "Creating new AdInfo"
+        ai = AdInfo.create! tmp
+        change_sub_type= if is_new then
+                           'new_ad'
+                         else
+                           'updated_ad'
+                         end
+        puts "Creating new change (siid=#{si.id} and aiid=#{ai.id}) - "+change_sub_type
+        change = Change.new(changeType: 'search_info', changeSubtype: change_sub_type)
         change.search_info_id = si.id
         change.ad_info_id = ai.id
         change.save!
       end
-      si.ad_infos << ai
-      #if old_ad_infos_arr.find_index ai
-      #  old_ad_infos_arr.delete ai
+      # update links between search info resource and all ads in the search
+      #unless si.ad_infos.include? ai
+      #  puts "Creating new link between SearchInfo and AdInfo - siid=#{si.id} and aiid=#{ai.id} - new ad"
+      #  # create
+      #  unless si.new_record?
+      #    # track this change
+      #    puts "Creating new change - new ad (siid=#{si.id} and aiid=#{ai.id})"
+      #    change = Change.new(changeType: 'search_info', changeSubtype: 'new_ad')
+      #    change.search_info_id = si.id
+      #    change.ad_info_id = ai.id
+      #    change.save!
+      #  end
+      #  si.ad_infos << ai
+      #  #if old_ad_infos_arr.find_index ai
+      #  #  old_ad_infos_arr.delete ai
+      #  #end
       #end
     end
   end
-  # remove all AdIds, that left in stored old collection
-  #puts "#{old_ad_infos_arr.length} links between SearchInfos and Ads left"
-  #old_ad_infos_arr.each do |ai|
-  #  puts "Removing link between SearchInfo and AdInfo - siid=#{si.id} and aiid=#{ai.id}"
-  #  # todo: create change record
-  #  si.ad_infos.delete ai.id
-  #end
-
   #only for debug
   #si.ad_infos.delete si.ad_infos.first
   #si.ad_infos.delete si.ad_infos.second
   #si.ad_infos.delete si.ad_infos.third
-  si.lastExternId=ads.any? && ads[0]['externId']
-  si.resultsCount = ads.length
+  #si.lastExternId=ads.any? && ads[0]['externId']
+  #si.resultsCount = ads.length
   si.lastCheckAt = DateTime.now
   changed
 end
@@ -141,16 +114,15 @@ requests.each do |r|
     type = sreality.get_url_type r.url
     if type == :search
       urln = sreality.normalize_search_page_url(r.url).to_s
-      #si = WatchedResource.where('externid=:eid', eid: urln).first
       si = SearchInfo.find_by_urlNormalized urln
       unless si
         puts 'Creating new SearchInfo'
         si = SearchInfo.new
         si.urlNormalized = urln
-        update_search_info si, sreality
         si.save!
+        update_search_info si, sreality
       end
-      # check if we have watched resource is associated with this request
+      # check if we have watched resource associated with this request
       unless r.search_infos.include?(si)
         puts 'Associating new Search info to request'
         r.search_infos << si
@@ -202,9 +174,9 @@ sis.each do |si|
     si.save!
     if is_changed
       puts "Search info with ID=#{si.id} has changed"
-      si.requests.each do |r|
-        puts "\tAcknowlidging owner of request #{r.id} - #{r.email}"
-      end
+      #si.requests.each do |r|
+      #  puts "\tAcknowlidging owner of request #{r.id} - #{r.email}"
+      #end
     else
       puts "Searchinfo with ID=#{si.id} was not changed"
     end

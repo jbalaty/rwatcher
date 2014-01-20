@@ -1,5 +1,13 @@
-<h2>Nové inzeráty <a href="<%= @request.url %>"><%= @request.title %></a></h2>
-Adresa SReality výpisu: <a href="<%= @request.url %>">odkaz</a>
+<h2>Nové inzeráty ve výpisu
+  <a href="<%= @request.url %>">
+    <% if @request.title %>
+        <%= @request.title %>
+    <% else %>
+        odkaz
+    <% end %>
+  </a>
+</h2>
+<br/>
 <% @notifications.each do |notification| %>
     <div>
       <%= sanitize(notification.ad_info.shortInfoHtml.gsub(/href="\//, 'href="http://www.sreality.cz/')

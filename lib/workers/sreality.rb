@@ -123,7 +123,23 @@ class Sreality
     if /sreality.cz\/hledani/i =~ url
       url = convert_nice_url(url)
     end
-    URI(url.sub(/sort=\d/, 'sort=0'))
+    #URI(url.sub(/sort=\d/, 'sort=0'))
+    uri = URI(url)
+    params = Rack::Utils.parse_query uri.query
+    params['sort']='0';
+    #params['age']='1';
+    uri.query = URI.encode_www_form params
+    #uri.query = uri.query.gsub('%5B%5D','')
+    uri.to_s
+  end
+
+  def set_search_page_url_to_new_only(url)
+    uri = URI(url)
+    params = Rack::Utils.parse_query uri.query
+    params['age']='1';
+    uri.query = URI.encode_www_form params
+    #uri.query = uri.query.gsub('%5B%5D','')
+    uri.to_s
   end
 
   def extract_search_page_info(url)
@@ -239,6 +255,7 @@ class Sreality
       end
     end
     uri.query = URI.encode_www_form params
+    #uri.query = uri.query.gsub('%5B%5D','')
     uri.to_s
   end
 

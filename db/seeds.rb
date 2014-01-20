@@ -20,17 +20,18 @@ Request.create!(title:'Muj inzerat na byt 1 - zruseny inzerat',
                 email: 'test@balwan.cz'
 )
 Request.create!(title:'Muj inzerat na vyhledavani',
-                url:'http://www.sreality.cz/search?category_type_cb=1&category_main_cb=2&sub%5B%5D=37&price_min=1000000&price_max=1100000&region=&distance=0&rg%5B%5D=5&rg%5B%5D=11&dt%5B%5D=48&usable_area-min=&usable_area-max=&flats-min=&flats-max=&age=0&extension=0&sort=0&perPage=30&hideRegions=0&discount=-1',
-                email: 'test@balwan.cz'
+                url:'http://www.sreality.cz/search?category_type_cb=2&category_main_cb=1&sub%5B%5D=3&price_min=5000&price_max=10000&region=&distance=0&rg%5B%5D=10&usable_area-min=&usable_area-max=&floor_number-min=&floor_number-max=&age=1&extension=0&sort=0&perPage=10&hideRegions=0&discount=-1',
+                email: 'test@balwan.cz',
+                state: 'active'
 )
-Request.create!(title:'Muj inzerat na domy v Ceske Lipe',
-                url:'http://www.sreality.cz/search?category_type_cb=1&category_main_cb=1&sub%5B%5D=1&sub%5B%5D=2&sub%5B%5D=3&sub%5B%5D=4&sub%5B%5D=5&sub%5B%5D=6&price_min=1200000&price_max=1850000&region=&distance=0&rg%5B%5D=10&dt%5B%5D=5001&dt%5B%5D=5002&dt%5B%5D=5003&dt%5B%5D=5008&usable_area-min=30&usable_area-max=&floor_number-min=&floor_number-max=&age=0&extension=1&sort=0&perPage=10&hideRegions=0&discount=-1',
-                email: 'test@balwan.cz'
-)
-Request.create!(title:'Fail inzerat',
-                url:'http://www.sreality.cz/projekt?perPage=10&sort=1&projectName=&region=&distance=0&rg%5B%5D=2&rg%5B%5D=11&dt%5B%5D=8asdfa',
-                email: 'test@balwan.cz'
-)
+#Request.create!(title:'Muj inzerat na domy v Ceske Lipe',
+#                url:'http://www.sreality.cz/search?category_type_cb=1&category_main_cb=1&sub%5B%5D=1&sub%5B%5D=2&sub%5B%5D=3&sub%5B%5D=4&sub%5B%5D=5&sub%5B%5D=6&price_min=1200000&price_max=1850000&region=&distance=0&rg%5B%5D=10&dt%5B%5D=5001&dt%5B%5D=5002&dt%5B%5D=5003&dt%5B%5D=5008&usable_area-min=30&usable_area-max=&floor_number-min=&floor_number-max=&age=0&extension=1&sort=0&perPage=10&hideRegions=0&discount=-1',
+#                email: 'test@balwan.cz'
+#)
+#Request.create!(title:'Fail inzerat',
+#                url:'http://www.sreality.cz/projekt?perPage=10&sort=1&projectName=&region=&distance=0&rg%5B%5D=2&rg%5B%5D=11&dt%5B%5D=8asdfa',
+#                email: 'test@balwan.cz'
+#)
 
 
 #Ad.delete_all
