@@ -989,6 +989,19 @@ $header-font-family: "Helvetica", Helvetica, Arial, sans-serif;
 // $topbar-arrows: true; //Set false to remove the triangle icon from the menu item
 @import 'foundation';
 
+.beta {
+  color:red;
+  font-size:15px;
+  font-weight: bold;
+  display:inline-block;
+  transform: rotate(30deg);
+  -ms-transform: rotate(30deg); /* IE 9 */
+  -webkit-transform: rotate(30deg); /* Safari and Chrome */
+  position: absolute;
+  top:5px;
+  margin-left:2px;
+}
+
 .alert-box {
   line-height: 135%;
 
