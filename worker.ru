@@ -7,8 +7,9 @@ require_relative 'lib/workers/http_tool.rb'
 require_relative 'lib/workers/sreality.rb'
 
 dt_start = Time.now
+puts "Start time: #{dt_start}"
 requests_per_second = 100
-dt = DateTime.now - 0.minutes
+dt = DateTime.now - 1.minutes
 @http_tool = HttpTool.new
 
 def puts_divider
