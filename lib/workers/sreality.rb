@@ -133,14 +133,22 @@ class Sreality
     uri.to_s
   end
 
-  def set_search_page_url_to_new_only(url)
-    uri = URI(url)
-    params = Rack::Utils.parse_query uri.query
-    params['age']='1';
-    uri.query = URI.encode_www_form params
-    #uri.query = uri.query.gsub('%5B%5D','')
-    uri.to_s
+  def set_search_page_url_age_to(url, value = :new)
+    if value.is_a? Symbol
+      case value
+        when :all
+          value = '0'
+        when :new
+          value = '1'
+        when :new7
+          value = '2'
+        when :new30
+          value = '3'
+      end
+    end
+    set_search_url_query_params(url, 'age' => value)
   end
+
 
   def extract_search_page_info(url)
     result = {}

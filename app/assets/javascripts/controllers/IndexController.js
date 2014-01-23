@@ -75,6 +75,9 @@ Rwatcher.IndexController = Ember.ObjectController.extend({
         showTerms: function () {
             $('#terms').foundation('reveal', 'open', '#about');
         },
+        hideTerms: function () {
+            $('#terms').foundation('reveal', 'close', '#about');
+        },
         showHelp: function () {
             $('#help').toggle();
         }

@@ -99,6 +99,7 @@ class API::RequestsController < ApplicationController
           např. \"http://www.sreality.cz/search?category_type_cb=1&category_main_cb=1...\""
     else
       begin
+        url = sreality.set_search_page_url_age_to(url, :all)
         page_info = sreality.get_page_summary(url)
         unless page_info
           errors << "Bohužel náš systém nebyl schopen tuto adresu zpracovat.

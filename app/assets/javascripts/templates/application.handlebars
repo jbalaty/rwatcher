@@ -1,23 +1,28 @@
-<header class="row">
-    <div class="columns">
-        <h1><a href="/" style="color:inherit;">
-            <em><b style="color:red;">S</b>ledování&nbsp;realit</em>
-        </a>
-            <div class="beta">beta</div>
-        </h1>
-
-    </div>
-</header>
-{{outlet}}
-<br/>
-<footer class="row">
-    <div class="columns text-center">
-        {{#link-to 'index'}}Hlavní stránka{{/link-to}}
-        &nbsp;&nbsp;&nbsp;
-        {{#link-to 'about'}}O službě{{/link-to}}
-        &nbsp;&nbsp;&nbsp;
-        {{#link-to 'pricelist'}}Ceník{{/link-to}}
-        &nbsp;&nbsp;&nbsp;
-        {{#link-to 'faq'}}Časté dotazy{{/link-to}}
-    </div>
-</footer>
+<div class="body">
+    <header class="row">
+        <div class="columns small-12 large-5">
+            <h1><a href="/" style="color:inherit;">
+                <em>
+                    <b style="color:red;">S</b>ledování&nbsp;realit
+                    <div class="beta">beta</div>
+                </em>
+            </a></h1>
+        </div>
+        <div class="columns small-12 large-7 text-right" style="padding-top:7px; padding-bottom:7px; padding-right:50px;">
+            <span class="faded">do {{GLOBAL_FREE_LIMIT}} inzerátů zdarma</span>
+        </div>
+    </header>
+    {{outlet}}
+    <br/>
+    <footer class="row">
+        <div class="columns text-center">
+            {{#link-to 'index'}}Hlavní stránka{{/link-to}}
+            &nbsp;&nbsp;&nbsp;
+            {{#link-to 'about'}}O službě{{/link-to}}
+            &nbsp;&nbsp;&nbsp;
+            {{#link-to 'pricelist'}}Ceník{{/link-to}}
+            &nbsp;&nbsp;&nbsp;
+            {{#link-to 'faq'}}Časté dotazy{{/link-to}}
+        </div>
+    </footer>
+</div>

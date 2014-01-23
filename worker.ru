@@ -49,7 +49,7 @@ end
 
 def update_search_info(si, sreality)
   changed = false
-  url = sreality.set_search_page_url_to_new_only(si.urlNormalized)
+  url = sreality.set_search_page_url_age_to(si.urlNormalized, :new)
   extractedsi = sreality.extract_search_page_info(url)
   ads = extractedsi['ads']
   if ads.length == 0

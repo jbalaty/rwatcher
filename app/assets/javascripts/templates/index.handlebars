@@ -40,9 +40,8 @@
             <strong>{{ adsCount }} inzerátů</strong>.<br/>
             {{#if showPayedWarning}}
             <strong><br/>
-                Do 100 inzerátů je naše služba zcela zdarma, pokud chcete sledovat více inzerátů,
-                je třeba si u nás objednat placený tarif. Více viz sekce {{#link-to 'faq' }}Často kladené
-                dotazy{{/link-to}}.<br/>
+                Do {{GLOBAL_FREE_LIMIT}} inzerátů je naše služba zcela zdarma, pokud chcete sledovat více inzerátů,
+                je třeba si u nás objednat placený tarif. Více viz {{#link-to 'pricelist' }}Ceník{{/link-to}}.<br/>
             </strong><br/>
             {{/if}}
             Pokud chcete tyto inzeráty sledovat, zadejte Váš e-mail a odešlete.<br/>
@@ -84,6 +83,9 @@
 <div id="terms" class="reveal-modal" data-reveal>
     <div class="panel">
         {{partial 'terms'}}
+        <div class="text-center">
+            <a {{action 'hideTerms'}} class="button">Ok, chápu</a>
+        </div>
     </div>
-    <a class="close-reveal-modal">&#215;</a>
+    <a {{action 'hideTerms'}} class="close-reveal-modal">&#215;</a>
 </div>
