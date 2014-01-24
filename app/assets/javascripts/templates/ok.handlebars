@@ -1,14 +1,16 @@
 <br/>
 <div class="row collapse">
     <div class="columns">
-        <div data-alert class="alert-box success radius"><p>
-            Vaše sledování bylo úspěšně zadáno pod číslem {{id}}.<br/>
+        <div data-alert class="alert-box success radius">
+            <p>
+                Vaše sledování bylo úspěšně zadáno pod číslem {{varsymbol}}<br/>
 
-            Veškeré potřebné informace Vám byl zaslány na emailovou adresu:
-            <strong>{{email}}</strong>
+                Veškeré potřebné informace Vám byl zaslány na emailovou adresu:
+                <strong>{{email}}</strong><br/>
+                <small>V případě, že by Vám email nedorazil, kontaktuje nás na adrese:
+                <a href="mailto:info@{{GLOBAL_DOMAIN}}">info@{{GLOBAL_DOMAIN}}</a></small>
             </p>
-            V případě, že by Vám email nedorazil, kontaktuje nás na adrese:
-            <a href="mailto:info@{{GLOBAL_DOMAIN}}">info@{{GLOBAL_DOMAIN}}</a>
+            <div class="sms_guide_container">{{{ sms_guide_html }}}</div>
         </div>
     </div>
 </div>

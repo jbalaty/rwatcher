@@ -1005,6 +1005,18 @@ $header-font-family: "Helvetica", Helvetica, Arial, sans-serif;
   top:5px;
   margin-left:2px;
 }
+.highlight-beta {
+  color:red;
+}
+
+th.current {
+  background-color: #D0D0D0;
+}
+td.current{
+  background-color: #EBEBEB;
+  font-weight: bold;
+}
+
 .faded {
   color:rgb(233, 227, 227);
   font-style: italic;
@@ -1013,8 +1025,14 @@ $header-font-family: "Helvetica", Helvetica, Arial, sans-serif;
 .alert-box {
   line-height: 135%;
 
+
   a {
     color: white;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  &.info a {
+    color:#4e4e4e;
     font-weight: bold;
     text-decoration: underline;
   }
@@ -1031,3 +1049,5 @@ b {
 img {
   background-image: url(image_path('sr1.jpg'));
 }
+
+.sms_guide_container > div {text-align: center; margin:0px auto;}

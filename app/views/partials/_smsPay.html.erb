@@ -1,0 +1,31 @@
+<div style="border:1px solid #D9D9D9;         background: #F3F3F3;         padding: 15px;         color:#666666;         font-size:12px;         font-family: arial;         width:500px;                  border-radius:0px;">
+
+  <span style="padding-right: 10px;">Pošlete SMS ve tvaru:</span>
+    <span style="background: #4C1130;color:#FFFFFF;font-size: 24px; font-weight: bold;">
+      PLATBA SLEDREALIT <%= @request.varsymbol %>
+    </span>
+
+  <div style="padding: 10px 0 10px 0;border-bottom: 1px dashed #CCCCCC}">
+    <table style="margin: 0 auto">
+      <tbody>
+      <tr>
+        <td>na číslo:
+        </td>
+        <td style="font-size:18px; font-weight: bold;color:#000000;padding: 0 10px 0 10px;">
+          <%= @request.get_sms_phone_number(@request.tarrif_parsed[1]) %>
+        </td>
+        <td>
+          <span> Cena SMS je </span><%= @request.tarrif_parsed[1] %> Kč vč. DPH
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="font-size:10px;padding-top: 10px;color:#666666">
+    Službu technicky zajišťuje Airtoy a.s. Relamace plateb na reklamace@airtoy.cz nebo lince 602 777 555, 9 - 17 hodin,
+    Po-Pá,
+    <a style="color:#666666" href="http://www.platmobilem.cz">www.platmobilem.cz</a>.
+    Kontakt na provozovatele služby:
+    <a href="mailto:sms@sledovani-realit.cz" style="color:#666666">sms@sledovani-realit.cz</a>
+  </div>
+</div>

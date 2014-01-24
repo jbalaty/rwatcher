@@ -15,7 +15,7 @@
 {{/each}}
 <div class="row collapse">
     <div class="small-1 columns">
-        <span class="prefix">Url</span>
+        <span class="prefix">Adresa</span>
     </div>
     <div class="small-8 columns">
         {{input value=url id="url" placeholder="http://www.sreality.cz/hledani/prodej/domy?price_max=3000000"
@@ -35,18 +35,22 @@
 {{#if showSummary}}
 <div class="row">
     <div class="columns">
-        <div data-alert class="alert-box">
+        <div data-alert class="alert-box info">
             Na <a {{ bind-attr href=url }} target="_blank">zadané adrese</a> jsme nalezli
-            <strong>{{ adsCount }} inzerátů</strong>.<br/>
-            {{#if showPayedWarning}}
-            <strong><br/>
-                Do {{GLOBAL_FREE_LIMIT}} inzerátů je naše služba zcela zdarma, pokud chcete sledovat více inzerátů,
-                je třeba si u nás objednat placený tarif. Více viz {{#link-to 'pricelist' }}Ceník{{/link-to}}.<br/>
-            </strong><br/>
-            {{/if}}
+            <strong>{{ adsCount }} inzerátů</strong>.
+        </div>
+        {{#if showPayedWarning}}
+        <div data-alert class="alert-box">
+            <strong>
+                Do {{GLOBAL_FREE_LIMIT}} inzerátů je naše služba zcela zdarma, pokud chcete sledovat více
+                inzerátů,
+                je třeba si u nás objednat placený tarif. Více viz {{#link-to 'pricelist'
+                }}Ceník{{/link-to}}.<br/>
+            </strong>
+        </div>
+        {{/if}}
+        <div data-alert class="alert-box info">
             Pokud chcete tyto inzeráty sledovat, zadejte Váš e-mail a odešlete.<br/>
-            Od toho okamžiku Vám budou chodit upozornění na
-            <strong>nové</strong> a <strong>změněné</strong> inzeráty.
         </div>
     </div>
 </div>

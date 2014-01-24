@@ -8,5 +8,7 @@
 Rwatcher.Request = DS.Model.extend({
     url: DS.attr('string'),
     email: DS.attr('string'),
-    created: DS.attr('date')
+    varsymbol: DS.attr('string'),
+    sms_guide_html: DS.attr('string'),
+    created_at: DS.attr('date')
 });

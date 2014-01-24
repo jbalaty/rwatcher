@@ -47,14 +47,21 @@ class API::RequestsController < ApplicationController
   # POST /requests.json
   def create
     errors = []
-    @request = Request.new(request_params)
+    @request = Request.create(request_params)
     page_info = do_check @request.url, errors
+    page_info
     if page_info
       total = page_info['total']
-      if total<= 100
+      @request.tarrif_parsed = @request.get_tarrif total
+      @request.tarrif= @request.tarrif_parsed.join '_'
+      if @request.tarrif_parsed[1] == 'FREE'
         @request.state = 'active'
+      else # if this is not free tarrif, render SMS payment info text
+        html = render_to_string("partials/_smsPay.html.erb", layout: false)
       end
-      @request.save
+      @request.varsymbol= @request.generate_varsymbol @request.id
+      @request.save! # save it second time to generate varsymbol
+      @request.sms_guide_html = html
       RequestNotifier.NewRequestInfo(@request).deliver
       respond_with(@request, location: nil)
     else
@@ -103,7 +110,7 @@ class API::RequestsController < ApplicationController
         page_info = sreality.get_page_summary(url)
         unless page_info
           errors << "Bohužel náš systém nebyl schopen tuto adresu zpracovat.
-Chyba bude zřejmě na naší straně a nejsme schopni ji vyřešit ihned. Ale uložili jsme si ji a náš
+Chyba bude zřejmě na naší straně a nejsme schopni ji vyřešit ihned. Uložili jsme si ji a náš
 team se jí bude co nejdříve zabývat."
         else
           return page_info

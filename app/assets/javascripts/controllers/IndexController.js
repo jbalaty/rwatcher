@@ -64,7 +64,11 @@ Rwatcher.IndexController = Ember.ObjectController.extend({
                             self.set('showSummary', false);
                             self.transitionToRoute('ok', data);
                         }, function (reason) {
-                            errors.pushObject('Nezdařilo se založit sledování (' + reason.statusText + ')');
+//                            errors.pushObject('Omlouváme se, ale založení sledování se nezdařilo (' + reason.statusText + '). Chyba');
+                            errors.pushObject('Je nám velice líto, ale v aplikaci došlo k chybě (' + reason.statusText + ').'+
+                                ' Pro jistotu můžete zkusit vaši akci zopakovat. Pokud to nepomůže, tak budeme velice rádi, když nás na problém upozorníte'+
+                            ' emailem (<a href="mailto:podpora@sledovani-realit.cz">podpora@sledovani-realit.cz</a>).'+
+                                ' Pokusíme se ho co nejrychleji vyřešit. Předem děkujeme');
                             //throw new Ember.Error('Nezdařilo se založit sledování.');
                         });
                 }
