@@ -7,10 +7,18 @@
 
                 Veškeré potřebné informace Vám byl zaslány na emailovou adresu:
                 <strong>{{email}}</strong><br/>
-                <small>V případě, že by Vám email nedorazil, kontaktuje nás na adrese:
-                <a href="mailto:info@{{GLOBAL_DOMAIN}}">info@{{GLOBAL_DOMAIN}}</a></small>
             </p>
+            {{#if sms_guide_html }}
+            <p>
+            Informace pro platbu:
             <div class="sms_guide_container">{{{ sms_guide_html }}}</div>
+            </p>
+            {{/if}}
+
+            <small>
+                V případě, že by Vám email nedorazil, kontaktuje nás na adrese:
+                <a href="mailto:info@{{GLOBAL_DOMAIN}}">info@{{GLOBAL_DOMAIN}}</a>
+            </small>
         </div>
     </div>
 </div>

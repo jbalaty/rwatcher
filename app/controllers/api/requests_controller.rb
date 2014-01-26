@@ -11,10 +11,16 @@ class API::RequestsController < ApplicationController
     # test this url, it it is valid SReality url
     errors = []
     url = params[:url]
-    page_info = do_check(url, errors)
+    page_info = do_url_check(url, errors)
     if page_info
       total = page_info['total']
-      return respond_with({total: total})
+      tarrif_parsed = Request.get_tarrif total
+      return respond_with(
+          {
+              total: total,
+              tarrif_parsed: tarrif_parsed,
+              tarrif: tarrif_parsed.join('_')
+          })
     else
       return respond_with({errors: errors}, status: 400)
     end
@@ -47,20 +53,23 @@ class API::RequestsController < ApplicationController
   # POST /requests.json
   def create
     errors = []
-    @request = Request.create(request_params)
-    page_info = do_check @request.url, errors
-    page_info
-    if page_info
+    @request = Request.new(request_params)
+    page_info = do_url_check @request.url, errors
+    do_email_check @request.email, errors
+    if page_info && errors.length == 0
       total = page_info['total']
       @request.tarrif_parsed = @request.get_tarrif total
       @request.tarrif= @request.tarrif_parsed.join '_'
       if @request.tarrif_parsed[1] == 'FREE'
         @request.state = 'active'
-      else # if this is not free tarrif, render SMS payment info text
+      end
+      @request.save! # save it second time to generate varsymbol
+      @request.varsymbol = @request.generate_varsymbol @request.id
+      @request.save!
+      unless @request.tarrif_parsed[1] == 'FREE'
+        # if this is not free tarrif, render SMS payment info text
         html = render_to_string("partials/_smsPay.html.erb", layout: false)
       end
-      @request.varsymbol= @request.generate_varsymbol @request.id
-      @request.save! # save it second time to generate varsymbol
       @request.sms_guide_html = html
       RequestNotifier.NewRequestInfo(@request).deliver
       respond_with(@request, location: nil)
@@ -96,7 +105,7 @@ class API::RequestsController < ApplicationController
     params.require(:request).permit(:name, :url, :email)
   end
 
-  def do_check(url, errors)
+  def do_url_check(url, errors)
     http_tool = HttpTool.new
     sreality = Sreality.new http_tool
     if url !~ URI::regexp
@@ -116,9 +125,18 @@ team se jí bude co nejdříve zabývat."
           return page_info
         end
       rescue
-        errors << $!
+        logger.warn 'Error when getting search page summary'
+        logger.warn $!
+        errors << 'Chybná odpověď serveru, url adresa zřejmě nebude ve správném formátu.'
       end
     end
     return nil
+  end
+
+  def do_email_check(email, errors)
+    emailok = @request.email =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+    unless emailok
+      errors << 'Email není validní, nebo je špatném formátu.'
+    end
   end
 end

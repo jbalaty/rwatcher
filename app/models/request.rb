@@ -20,18 +20,26 @@ class Request < ActiveRecord::Base
     "Z#{id}"
   end
 
-  def get_tarrif(numads)
-    #other_request_by_email = self.find_all_by_email(self.email)
-    if numads < 100
-      return %w{T0 FREE}
+  def self.get_tarrif(numads, thisrequest = nil)
+    if thisrequest
+      requests_by_email = Request.where("email=?", thisrequest.email)
+      num_free_tarrif_requests = requests_by_email.select { |i| i.id != thisrequest.id && i.tarrif =~ /free/i }.length
+    else
+      num_free_tarrif_requests = 0
     end
-    if numads < 500
+    if numads < 100 && num_free_tarrif_requests == 0
+      return %w{T0 FREE}
+    elsif numads < 500
       return %w{T0 50}
     elsif numads < 5000
       return %w{T0 149}
     else
       return %w{T0 INDIVIDUAL}
     end
+  end
+
+  def get_tarrif(numads)
+    Request.get_tarrif(numads, self)
   end
 
   def get_sms_phone_number(amount)
@@ -41,7 +49,7 @@ class Request < ActiveRecord::Base
       when '149'
         return '90333'
       else
-        raise Exception 'Wrong amount, don\'t have sms number for it'
+        raise 'Wrong amount, don\'t have sms number for it'
     end
   end
 

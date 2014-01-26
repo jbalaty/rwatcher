@@ -36,7 +36,8 @@ Rwatcher.IndexController = Ember.ObjectController.extend({
             Ember.$.getJSON('/api/url-info', {url: inputUrl}).then(function (data) {
                 errors.clear();
                 self.set('adsCount', data.total);
-                self.set('showPayedWarning',data.total>100);
+                self.set('showPayedWarning', data.tarrif.toLowerCase().indexOf('free') < 0);
+                self.set('payedAmount',data.tarrif_parsed[1]);
                 self.set('showSummary', true);
                 //Ember.$('#email').focus(); does not work
             }, function (reason) {
@@ -65,9 +66,9 @@ Rwatcher.IndexController = Ember.ObjectController.extend({
                             self.transitionToRoute('ok', data);
                         }, function (reason) {
 //                            errors.pushObject('Omlouváme se, ale založení sledování se nezdařilo (' + reason.statusText + '). Chyba');
-                            errors.pushObject('Je nám velice líto, ale v aplikaci došlo k chybě (' + reason.statusText + ').'+
-                                ' Pro jistotu můžete zkusit vaši akci zopakovat. Pokud to nepomůže, tak budeme velice rádi, když nás na problém upozorníte'+
-                            ' emailem (<a href="mailto:podpora@sledovani-realit.cz">podpora@sledovani-realit.cz</a>).'+
+                            errors.pushObject('Je nám velice líto, ale v aplikaci došlo k chybě (' + reason.statusText + ').' +
+                                ' Pro jistotu můžete zkusit vaši akci zopakovat. Pokud to nepomůže, tak budeme velice rádi, když nás na problém upozorníte' +
+                                ' emailem (<a href="mailto:podpora@sledovani-realit.cz">podpora@sledovani-realit.cz</a>).' +
                                 ' Pokusíme se ho co nejrychleji vyřešit. Předem děkujeme');
                             //throw new Ember.Error('Nezdařilo se založit sledování.');
                         });

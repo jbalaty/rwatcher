@@ -39,16 +39,21 @@
             Na <a {{ bind-attr href=url }} target="_blank">zadané adrese</a> jsme nalezli
             <strong>{{ adsCount }} inzerátů</strong>.
         </div>
-        {{#if showPayedWarning}}
         <div data-alert class="alert-box">
             <strong>
                 Do {{GLOBAL_FREE_LIMIT}} inzerátů je naše služba zcela zdarma, pokud chcete sledovat více
                 inzerátů,
                 je třeba si u nás objednat placený tarif. Více viz {{#link-to 'pricelist'
                 }}Ceník{{/link-to}}.<br/>
+                {{#if showPayedWarning}}
+                Cena tohoto sledování: {{payedAmount}} Kč vč. DPH
+                {{else}}
+                <small>je možné mí pouze jedno sledov8n9 na jeden emailový účet</small>
+
+                {{/if}}
             </strong>
         </div>
-        {{/if}}
+
         <div data-alert class="alert-box info">
             Pokud chcete tyto inzeráty sledovat, zadejte Váš e-mail a odešlete.<br/>
         </div>
