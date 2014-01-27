@@ -17,7 +17,7 @@ class Request < ActiveRecord::Base
   end
 
   def generate_varsymbol(id)
-    "Z#{id}"
+    id.to_s(36)
   end
 
   def self.get_tarrif(numads, thisrequest = nil)
@@ -27,15 +27,20 @@ class Request < ActiveRecord::Base
     else
       num_free_tarrif_requests = 0
     end
-    if numads < 100 && num_free_tarrif_requests == 0
+    if numads < 5000
       return %w{T0 FREE}
-    elsif numads < 500
-      return %w{T0 50}
-    elsif numads < 5000
-      return %w{T0 149}
     else
       return %w{T0 INDIVIDUAL}
     end
+    #if numads < 100 && num_free_tarrif_requests == 0
+    #  return %w{T0 FREE}
+    #elsif numads < 500
+    #  return %w{T0 50}
+    #elsif numads < 5000
+    #  return %w{T0 149}
+    #else
+    #  return %w{T0 INDIVIDUAL}
+    #end
   end
 
   def get_tarrif(numads)

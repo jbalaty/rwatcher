@@ -4,5 +4,3 @@
 #     b) zaslat informace do emailu
 # TODO: !!!dont forget to not use 'Z' in further number to alphabet code translation algorithm, see request model - generation of var symbol
 # TODO: mesicni info o znovuzaplaceni sluzby
-# TODO: informovat uzivatele o tom, kolik to bude stat
-# TODO: upozornit na to, ze sledovani s danou URL jiz existuje

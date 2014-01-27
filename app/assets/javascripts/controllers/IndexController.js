@@ -36,13 +36,19 @@ Rwatcher.IndexController = Ember.ObjectController.extend({
             Ember.$.getJSON('/api/url-info', {url: inputUrl}).then(function (data) {
                 errors.clear();
                 self.set('adsCount', data.total);
-                self.set('showPayedWarning', data.tarrif.toLowerCase().indexOf('free') < 0);
-                self.set('payedAmount',data.tarrif_parsed[1]);
+//                self.set('showPayedWarning', data.tarrif.toLowerCase().indexOf('free') < 0);
+                self.set('showPayedWarning', true);
+                if (data.tarrif.toLowerCase().indexOf('free') > -1) {
+                    self.set('payedAmount', '0 Kč');
+                } else if (data.tarrif.toLowerCase().indexOf('individual') > -1) {
+                    self.set('payedAmount', 'individuální, po založení sledování Vás budeme kontaktovat');
+                } else {
+                    self.set('payedAmount', data.tarrif_parsed[1] + ' Kč');
+                }
                 self.set('showSummary', true);
                 //Ember.$('#email').focus(); does not work
             }, function (reason) {
                 errors.clear();
-                console.log('error error!' + JSON.stringify(reason.responseJSON));
                 errors.pushObjects(reason.responseJSON.errors);
             })
         },
@@ -65,12 +71,13 @@ Rwatcher.IndexController = Ember.ObjectController.extend({
                             self.set('showSummary', false);
                             self.transitionToRoute('ok', data);
                         }, function (reason) {
-//                            errors.pushObject('Omlouváme se, ale založení sledování se nezdařilo (' + reason.statusText + '). Chyba');
-                            errors.pushObject('Je nám velice líto, ale v aplikaci došlo k chybě (' + reason.statusText + ').' +
+                            errors.pushObjects(reason.responseJSON.errors);
+                            //errors.pushObject('Omlouváme se, ale založení sledování se nezdařilo (' + reason.statusText + '). Chyba');
+                            /*errors.pushObject('Je nám velice líto, ale v aplikaci došlo k chybě (' + reason.statusText + ').' +
                                 ' Pro jistotu můžete zkusit vaši akci zopakovat. Pokud to nepomůže, tak budeme velice rádi, když nás na problém upozorníte' +
                                 ' emailem (<a href="mailto:podpora@sledovani-realit.cz">podpora@sledovani-realit.cz</a>).' +
                                 ' Pokusíme se ho co nejrychleji vyřešit. Předem děkujeme');
-                            //throw new Ember.Error('Nezdařilo se založit sledování.');
+                              */
                         });
                 }
             } else {

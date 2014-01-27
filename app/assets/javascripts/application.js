@@ -37,7 +37,7 @@ Rwatcher = Ember.Application.create({
 // set global constants
 Ember.ControllerMixin.reopen({
     GLOBAL_DOMAIN:'sledovani-realit.cz',
-    GLOBAL_FREE_LIMIT:100
+    GLOBAL_FREE_LIMIT:5000
 });
 //= require_tree .
 

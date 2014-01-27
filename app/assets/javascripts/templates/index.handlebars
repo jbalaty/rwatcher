@@ -1,5 +1,16 @@
 <div class="row collapse">
     <div class="columns">
+        <ul class="circle">
+            <li>Chcete být informováni o nových bytech nebo pozemcích ve Vaší oblasti jako první?</li>
+            <li>Hledáte velmi specifickou nemovitost? Nechte nás hlídat nabídky realit za Vás.</li>
+            <li>Okamžité informace o nových inzerátech na Váš telefon nebo email.</li>
+            <li>Do {{GLOBAL_FREE_LIMIT}} inzerátů zdarma.</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row collapse">
+    <div class="columns">
         <h5 for="url">Zadejte url adresu výpisu, který chcete sledovat &nbsp;-&nbsp;
             <a href="#" {{action 'showHelp'}}><b>nápověda</b></a></h5>
     </div>
@@ -7,7 +18,7 @@
 {{#each message in errors}}
 <div class="row">
     <div class="columns">
-        <div data-alert class="alert-box warning">
+        <div data-alert class="alert-box error">
             {{ message }}
         </div>
     </div>
@@ -18,7 +29,7 @@
         <span class="prefix">Adresa</span>
     </div>
     <div class="small-8 columns">
-        {{input value=url id="url" placeholder="http://www.sreality.cz/hledani/prodej/domy?price_max=3000000"
+        {{input value=url id="url" placeholder="http://www.sreality.cz/hledani/prodej/domy?price_max=2000000"
         focus-out="processUrl" insert-newline="processUrl" classBinding="showSummary:disabled"}}
     </div>
     <div class="small-3 columns">
@@ -35,26 +46,24 @@
 {{#if showSummary}}
 <div class="row">
     <div class="columns">
-        <div data-alert class="alert-box info">
+        <div data-alert class="alert-box">
             Na <a {{ bind-attr href=url }} target="_blank">zadané adrese</a> jsme nalezli
             <strong>{{ adsCount }} inzerátů</strong>.
         </div>
-        <div data-alert class="alert-box">
+        <div data-alert class="alert-box warning">
             <strong>
                 Do {{GLOBAL_FREE_LIMIT}} inzerátů je naše služba zcela zdarma, pokud chcete sledovat více
                 inzerátů,
                 je třeba si u nás objednat placený tarif. Více viz {{#link-to 'pricelist'
                 }}Ceník{{/link-to}}.<br/>
                 {{#if showPayedWarning}}
-                Cena tohoto sledování: {{payedAmount}} Kč vč. DPH
+                Cena Vašeho sledování: {{payedAmount}}
                 {{else}}
-                <small>je možné mí pouze jedno sledov8n9 na jeden emailový účet</small>
 
                 {{/if}}
             </strong>
         </div>
-
-        <div data-alert class="alert-box info">
+        <div data-alert class="alert-box">
             Pokud chcete tyto inzeráty sledovat, zadejte Váš e-mail a odešlete.<br/>
         </div>
     </div>

@@ -57,24 +57,33 @@ class API::RequestsController < ApplicationController
     page_info = do_url_check @request.url, errors
     do_email_check @request.email, errors
     if page_info && errors.length == 0
-      total = page_info['total']
-      @request.tarrif_parsed = @request.get_tarrif total
-      @request.tarrif= @request.tarrif_parsed.join '_'
-      if @request.tarrif_parsed[1] == 'FREE'
-        @request.state = 'active'
+      begin
+        total = page_info['total']
+        @request.tarrif_parsed = @request.get_tarrif total
+        @request.tarrif= @request.tarrif_parsed.join '_'
+        if @request.tarrif_parsed[1] == 'FREE'
+          @request.state = 'active'
+        end
+        @request.save! # save it second time to generate varsymbol
+        @request.varsymbol = @request.generate_varsymbol @request.id
+        @request.save!
+        unless @request.tarrif_parsed[1] != 'FREE'
+          # if this is not free tarrif, render SMS payment info text
+          html = render_to_string("partials/_smsPay.html.erb", layout: false)
+        end
+        @request.sms_guide_html = html
+        RequestNotifier.NewRequestInfo(@request).deliver
+        return respond_with(@request, location: nil)
+      rescue ActiveRecord::RecordNotUnique => e
+        if (e.message.include? 'index_requests_on_url_and_email')
+          errors << 'Sledování s touto adresou pro zadaný email je již jednou zadáno.'
+          return respond_with({errors: errors}, status: :unprocessable_entity, location: nil)
+        else
+          raise $!
+        end
       end
-      @request.save! # save it second time to generate varsymbol
-      @request.varsymbol = @request.generate_varsymbol @request.id
-      @request.save!
-      unless @request.tarrif_parsed[1] == 'FREE'
-        # if this is not free tarrif, render SMS payment info text
-        html = render_to_string("partials/_smsPay.html.erb", layout: false)
-      end
-      @request.sms_guide_html = html
-      RequestNotifier.NewRequestInfo(@request).deliver
-      respond_with(@request, location: nil)
     else
-      respond_with({errors: errors}, status: :unprocessable_entity)
+      return respond_with({errors: errors}, status: :unprocessable_entity)
     end
   end
 

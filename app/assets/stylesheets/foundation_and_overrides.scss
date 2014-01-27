@@ -990,7 +990,7 @@ $header-font-family: "Helvetica", Helvetica, Arial, sans-serif;
 @import 'foundation';
 
 .body {
-  padding:5px;
+  padding:8px;
 }
 
 .beta {
@@ -1035,6 +1035,10 @@ td.current{
     color:#4e4e4e;
     font-weight: bold;
     text-decoration: underline;
+  }
+  &.error {
+    background-color: red;
+    border-color:rgb(228, 0, 0);
   }
 }
 
