@@ -69,9 +69,9 @@ class API::RequestsController < ApplicationController
         @request.save!
         unless @request.tarrif_parsed[1] != 'FREE'
           # if this is not free tarrif, render SMS payment info text
-          html = render_to_string("partials/_smsPay.html.erb", layout: false)
+          #html = render_to_string("partials/_smsPay.html.erb", layout: false)
+          #@request.sms_guide_html = html
         end
-        @request.sms_guide_html = html
         RequestNotifier.NewRequestInfo(@request).deliver
         return respond_with(@request, location: nil)
       rescue ActiveRecord::RecordNotUnique => e

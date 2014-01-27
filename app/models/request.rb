@@ -27,7 +27,7 @@ class Request < ActiveRecord::Base
     else
       num_free_tarrif_requests = 0
     end
-    if numads < 5000
+    if numads < 2000
       return %w{T0 FREE}
     else
       return %w{T0 INDIVIDUAL}
