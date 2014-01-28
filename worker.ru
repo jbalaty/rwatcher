@@ -47,6 +47,12 @@ def ad_changed?(ai, new_values_hash)
   return false
 end
 
+def clean_info_html(html)
+  # clean info html from view specific tags, such as add to favourites link
+  # (it changes when user visits the ad)
+  html.gsub(/<a\shref="\/favourites[^>]*>[^<]*<\/a>/,'')
+end
+
 def update_search_info(si, sreality)
   changed = false
   url = sreality.set_search_page_url_age_to(si.urlNormalized, :new)
@@ -59,7 +65,8 @@ def update_search_info(si, sreality)
       tmp = ad_hash
       tmp['lastCheckAt'] = DateTime.now
       ai = AdInfo.where('"externId"=?', ad_hash['externId']).order('created_at DESC').first()
-      if ai == nil || ai.shortInfoHtml != ad_hash['shortInfoHtml']
+      if ai == nil ||
+          clean_info_html(ai.shortInfoHtml) != clean_info_html(ad_hash['shortInfoHtml'])
         changed = true
         is_new = ai == nil
         puts "Creating new AdInfo"
@@ -120,6 +127,7 @@ requests.each do |r|
         puts 'Creating new SearchInfo'
         si = SearchInfo.new
         si.urlNormalized = urln
+        si.save!
         update_search_info si, sreality
       end
       # check if we have watched resource associated with this request
@@ -197,22 +205,34 @@ changes.each do |change|
     puts "Processing  change #{change.id}"
     si = change.search_info
     si.requests.each do |r|
-      puts "New notification for request #{r.id}"
-      puts "Change #{change.changeType}@#{change.changeSubtype}"
-      notifications = requestNotifications[r] || []
-      notifications << change
-      requestNotifications[r] = notifications
+      if r.numnotificationrounds > 0
+        puts "New notification for request #{r.id}"
+        puts "Change #{change.changeType}@#{change.changeSubtype}"
+        notifications = requestNotifications[r] || []
+        notifications << change
+        requestNotifications[r] = notifications
+      end
     end
     change.delete
   rescue
     puts $!, $@
   end
 end
+
+puts_divider
+puts "Increasing num notification rounds"
+requests.each do |r|
+  puts "Increasing num notification rounds for request ID=#{r.id}"
+  r.numnotificationrounds += 1
+  r.save!
+end
+
+
 puts_divider
 puts "Sending notification emails: #{requestNotifications.length}"
 requestNotifications.each do |k, v|
   begin
-    puts "Sending email for request #{k.id}"
+    puts "Sending email for request #{k.id} - number of notifications: #{v.length}"
     RequestNotifier.SearchInfoChangeSummary(k, v).deliver
   rescue
     puts $!, $@

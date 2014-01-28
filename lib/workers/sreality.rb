@@ -153,28 +153,36 @@ class Sreality
   def extract_search_page_info(url)
     result = {}
     page = @http_tool.get set_search_url_query_params(url, 'perPage' => 100)
-    nodes = page.search('#results #showOnMap p span')
-    result['foundCount'] = nodes.first.content.match(/(?<count>[\d ]+)/)['count'].to_i
-    ads = []
-    # repeat until we have page with some results
-    while page
-      nodes = page.search('#changingResults .result.vcard')
-      nodes.each do |vcard|
-        unless vcard['class'] =~ /tip/
-          ads << extract_search_page_item(vcard)
+    # firt check the existence of No results node
+    nodes = page.search('#noResult')
+    if nodes.length > 0
+      result['total'] = 0
+      result['foundCount'] = 0
+      result['ads'] = []
+    else
+      nodes = page.search('#results #showOnMap p span')
+      result['foundCount'] = nodes.first.content.match(/(?<count>[\d ]+)/)['count'].to_i
+      ads = []
+      # repeat until we have page with some results
+      while page
+        nodes = page.search('#changingResults .result.vcard')
+        nodes.each do |vcard|
+          unless vcard['class'] =~ /tip/
+            ads << extract_search_page_item(vcard)
+          else
+            puts "Skipping this node, it is probably SReality payed ad"
+          end
+        end
+        # try to find next page link
+        nodes = page.search('#paging a.next')
+        if nodes.any?
+          page = @http_tool.get nodes.first['href']
         else
-          puts "Skipping this node, it is probably SReality payed ad"
+          page = nil
         end
       end
-      # try to find next page link
-      nodes = page.search('#paging a.next')
-      if nodes.any?
-        page = @http_tool.get nodes.first['href']
-      else
-        page = nil
-      end
+      result['ads'] = ads
     end
-    result['ads'] = ads
     result
   end
 

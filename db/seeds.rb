@@ -20,7 +20,7 @@ Request.create!(title:'Muj inzerat na byt 1 - zruseny inzerat',
                 email: 'test@balwan.cz'
 )
 Request.create!(title:'Muj inzerat na vyhledavani',
-                url:'http://www.sreality.cz/search?category_type_cb=2&category_main_cb=1&sub%5B%5D=3&price_min=5000&price_max=10000&region=&distance=0&rg%5B%5D=10&usable_area-min=&usable_area-max=&floor_number-min=&floor_number-max=&age=1&extension=0&sort=0&perPage=10&hideRegions=0&discount=-1',
+                url:'http://www.sreality.cz/search?category_type_cb=2&category_main_cb=1&sub%5B%5D=2&sub%5B%5D=3&sub%5B%5D=4&sub%5B%5D=5&sub%5B%5D=6&price_min=2000&price_max=13000&region=&distance=0&rg%5B%5D=10&dt%5B%5D=5001&dt%5B%5D=5002&dt%5B%5D=5003&dt%5B%5D=5004&dt%5B%5D=5008&usable_area-min=&usable_area-max=&floor_number-min=&floor_number-max=&age=0&extension=1&sort=0&perPage=10&hideRegions=0&discount=-1',
                 email: 'test@balwan.cz',
                 state: 'active'
 )
