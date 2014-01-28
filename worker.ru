@@ -181,7 +181,7 @@ sis.each do |si|
     is_changed = update_search_info si, sreality
     si.save!
     if is_changed
-      puts "Search info with ID=#{si.id} has changed"
+      puts "Search info with ID=#{si.id} was changed"
       #si.requests.each do |r|
       #  puts "\tAcknowlidging owner of request #{r.id} - #{r.email}"
       #end
@@ -197,17 +197,16 @@ end
 puts_divider
 puts "Processing changes"
 puts_divider
-puts "Getting SearchInfo records, that has changed"
+#puts "Getting SearchInfo records, that has changed"
 requestNotifications = {}
 changes = Change.all.order('created_at DESC')
 changes.each do |change|
   begin
-    puts "Processing  change #{change.id}"
+    puts "Processing  change #{change.id} (siid: #{change.search_info_id}, aid: #{change.ad_info_id})"
     si = change.search_info
     si.requests.each do |r|
       if r.numnotificationrounds > 0
-        puts "New notification for request #{r.id}"
-        puts "Change #{change.changeType}@#{change.changeSubtype}"
+        puts "New notification for request #{r.id} -  #{change.changeType}@#{change.changeSubtype}"
         notifications = requestNotifications[r] || []
         notifications << change
         requestNotifications[r] = notifications

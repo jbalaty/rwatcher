@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20140128091121) do
   end
 
   add_index "requests", ["url", "email"], name: "index_requests_on_url_and_email", unique: true, using: :btree
+  add_index "requests", ["varsymbol"], name: "index_requests_on_varsymbol", unique: true, using: :btree
 
   create_table "requests_search_infos", force: true do |t|
     t.integer "search_info_id"
