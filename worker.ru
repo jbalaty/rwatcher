@@ -64,6 +64,7 @@ def update_search_info(si, sreality)
     ads.each do |ad_hash|
       tmp = ad_hash
       tmp['lastCheckAt'] = DateTime.now
+      puts "Searching AdInfo with externId = #{ad_hash['externId']}"
       ai = AdInfo.where('"externId"=?', ad_hash['externId']).order('created_at DESC').first()
       if ai == nil ||
           clean_info_html(ai.shortInfoHtml) != clean_info_html(ad_hash['shortInfoHtml'])
