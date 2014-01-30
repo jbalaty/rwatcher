@@ -47,12 +47,6 @@ def ad_changed?(ai, new_values_hash)
   return false
 end
 
-def clean_info_html(html)
-  # clean info html from view specific tags, such as add to favourites link
-  # (it changes when user visits the ad)
-  html.gsub(/<a\shref="\/favourites[^>]*>[^<]*<\/a>/,'')
-end
-
 def update_search_info(si, sreality)
   changed = false
   url = sreality.set_search_page_url_age_to(si.urlNormalized, :new)
@@ -64,50 +58,31 @@ def update_search_info(si, sreality)
     ads.each do |ad_hash|
       tmp = ad_hash
       tmp['lastCheckAt'] = DateTime.now
-      puts "Searching AdInfo with externId = #{ad_hash['externId']}"
-      ai = AdInfo.where('"externId"=?', ad_hash['externId']).order('created_at DESC').first()
-      if ai == nil ||
-          clean_info_html(ai.shortInfoHtml) != clean_info_html(ad_hash['shortInfoHtml'])
+      puts "Searching AdInfo with externId = #{tmp['externId']}"
+      ai = AdInfo.where('search_info_id = ? AND "externId"=?', si.id, tmp['externId']).order('created_at DESC').first()
+      #puts "ai='#{ai}', ai.shortInfoHtmlHash='#{if ai then ai.shortInfoHtml.hash else '' end}', newInfoHtmlhash='#{ad_hash['shortInfoHtml'].hash}'"
+      #puts "ai='#{ai}', ai.shortInfoHtmlHash='#{if ai then ai.shortInfoHtml else '' end}', newInfoHtmlhash='#{ad_hash['shortInfoHtml']}'"
+      if ai == nil
         changed = true
         is_new = ai == nil
-        puts "Creating new AdInfo"
-        ai = AdInfo.create! tmp
+        puts "Creating new AdInfo ExternID=#{tmp['externId']}"
+        ai = AdInfo.new tmp
+        ai.search_info_id=si.id
+        ai.save!
+        # create new change
         change_sub_type= if is_new then
                            'new_ad'
                          else
                            'updated_ad'
                          end
-        puts "Creating new change (siid=#{si.id} and aiid=#{ai.id}) - "+change_sub_type
+        puts "Creating new change (siid=#{si.id} and aiid=#{ai.id}) - #{change_sub_type}"
         change = Change.new(changeType: 'search_info', changeSubtype: change_sub_type)
         change.search_info_id = si.id
         change.ad_info_id = ai.id
         change.save!
       end
-      # update links between search info resource and all ads in the search
-      #unless si.ad_infos.include? ai
-      #  puts "Creating new link between SearchInfo and AdInfo - siid=#{si.id} and aiid=#{ai.id} - new ad"
-      #  # create
-      #  unless si.new_record?
-      #    # track this change
-      #    puts "Creating new change - new ad (siid=#{si.id} and aiid=#{ai.id})"
-      #    change = Change.new(changeType: 'search_info', changeSubtype: 'new_ad')
-      #    change.search_info_id = si.id
-      #    change.ad_info_id = ai.id
-      #    change.save!
-      #  end
-      #  si.ad_infos << ai
-      #  #if old_ad_infos_arr.find_index ai
-      #  #  old_ad_infos_arr.delete ai
-      #  #end
-      #end
     end
   end
-  #only for debug
-  #si.ad_infos.delete si.ad_infos.first
-  #si.ad_infos.delete si.ad_infos.second
-  #si.ad_infos.delete si.ad_infos.third
-  #si.lastExternId=ads.any? && ads[0]['externId']
-  #si.resultsCount = ads.length
   si.lastCheckAt = DateTime.now
   changed
 end
@@ -129,7 +104,7 @@ requests.each do |r|
         si = SearchInfo.new
         si.urlNormalized = urln
         si.save!
-        update_search_info si, sreality
+        #update_search_info si, sreality
       end
       # check if we have watched resource associated with this request
       unless r.search_infos.include?(si)
@@ -138,19 +113,7 @@ requests.each do |r|
       end
     elsif type == :detail
       puts 'Type Ad is not implemented yet'
-      #externid = sreality.extract_detail_page_externid r.url
-      #ad = Ad.find_by_externid externid
-      #unless ad
-      #  puts 'Creating new ad'
-      #  ad = Ad.new()
-      #  ad.url = sreality.normalize_detail_page_url(r.url).to_s
-      #  update_ad ad
-      #  ad.save!
-      #end
-      #unless r.ads.include?(ad)
-      #  puts "Associating existing ad to this request"
-      #  r.ads << ad
-      #end
+      raise NotImplementedError
     else
       raise 'Unknown request type'
     end
@@ -177,20 +140,17 @@ puts "Getting SearchInfo with last check before #{dt}"
 sis = SearchInfo.where('"lastCheckAt" <= ? or "lastCheckAt" is null', dt)
 sis.each do |si|
   begin
-    puts "Search info url: #{si.urlNormalized}"
+    puts "Search info SIID=#{si.id} URL: #{si.urlNormalized}"
     sreality = Sreality.new @http_tool
     is_changed = update_search_info si, sreality
     si.save!
     if is_changed
-      puts "Search info with ID=#{si.id} was changed"
-      #si.requests.each do |r|
-      #  puts "\tAcknowlidging owner of request #{r.id} - #{r.email}"
-      #end
+      puts "Search info with SIID=#{si.id} was changed"
     else
-      puts "Searchinfo with ID=#{si.id} was not changed"
+      puts "Searchinfo with SIID=#{si.id} was not changed"
     end
-  rescue Exception => e
-    puts e
+  rescue
+    puts $!, $@
   end
   sleep 1 / requests_per_second
 end
