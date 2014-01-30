@@ -140,6 +140,7 @@ puts "Getting SearchInfo with last check before #{dt}"
 sis = SearchInfo.where('"lastCheckAt" <= ? or "lastCheckAt" is null', dt)
 sis.each do |si|
   begin
+    puts '-------------------------'
     puts "Search info SIID=#{si.id} URL: #{si.urlNormalized}"
     sreality = Sreality.new @http_tool
     is_changed = update_search_info si, sreality
@@ -149,6 +150,7 @@ sis.each do |si|
     else
       puts "Searchinfo with SIID=#{si.id} was not changed"
     end
+    puts '-------------------------'
   rescue
     puts $!, $@
   end
