@@ -1,0 +1,14 @@
+{
+  "name": "ember-google-analytics-js",
+  "homepage": "https://github.com/jbalaty/ember-google-analytics",
+  "_release": "c7b994ad71",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "c7b994ad7199c608b6b242ffe7455c14c65192b9"
+  },
+  "_source": "https://github.com/jbalaty/ember-google-analytics.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/jbalaty/ember-google-analytics.git",
+  "_direct": true
+}

@@ -1,14 +1,13 @@
 {
   "name": "ember-google-analytics",
   "homepage": "https://github.com/ryanto/ember-google-analytics",
-  "_release": "65e810d048",
+  "_release": "b4f85ecf60",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "65e810d048ea2c2abe825fa6e2d32de1f5b1babd"
+    "commit": "b4f85ecf60388a9d4fbd1c4e3b3f33cc48d067a4"
   },
   "_source": "git://github.com/ryanto/ember-google-analytics.git",
   "_target": "*",
-  "_originalSource": "ember-google-analytics",
-  "_direct": true
+  "_originalSource": "ember-google-analytics"
 }
