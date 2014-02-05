@@ -35,7 +35,7 @@ Rwatcher.IndexController = Ember.ObjectController.extend(
                 var self = this;
                 // validate
                 // track this event
-                this.trackEvent('IndexAction', 'ProccessUrl', 'button', inputUrl);
+                this.trackEvent('IndexAction', 'ProccessUrl', inputUrl);
                 Ember.$.getJSON('/api/url-info', {url: inputUrl}).then(function (data) {
                     errors.clear();
                     self.set('adsCount', data.total);
