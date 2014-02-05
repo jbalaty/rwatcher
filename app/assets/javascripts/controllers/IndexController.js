@@ -16,7 +16,8 @@ function isEmailValid(email) {
     return true;
 }
 
-Rwatcher.IndexController = Ember.ObjectController.extend({
+Rwatcher.IndexController = Ember.ObjectController.extend(
+    Ember.GoogleAnalyticsTrackingMixin,{
     assets: Rwatcher.Assets,
     errors: [],
     showSummary: false,
@@ -33,6 +34,8 @@ Rwatcher.IndexController = Ember.ObjectController.extend({
             var inputUrl = this.get('url');
             var self = this;
             // validate
+            // track this event
+            this.trackEvent('IndexAction', 'ProccessUrl');
             Ember.$.getJSON('/api/url-info', {url: inputUrl}).then(function (data) {
                 errors.clear();
                 self.set('adsCount', data.total);
@@ -56,6 +59,7 @@ Rwatcher.IndexController = Ember.ObjectController.extend({
             var self = this;
             var errors = this.get('errors');
             errors.clear();
+            this.trackEvent('IndexAction', 'SubmitEmail');
             if (this.get('termsAgreement')) {
                 var inputUrl = this.get('url');
                 var inputEmail = this.get('email');
@@ -86,12 +90,14 @@ Rwatcher.IndexController = Ember.ObjectController.extend({
         },
         showTerms: function () {
             $('#terms').foundation('reveal', 'open', '#about');
+            this.trackEvent('IndexAction', 'ShowTerms');
         },
         hideTerms: function () {
             $('#terms').foundation('reveal', 'close', '#about');
         },
         showHelp: function () {
             $('#help').toggle();
+            this.trackEvent('IndexAction', 'ShowHelp');
         }
     }
 })
