@@ -60,6 +60,8 @@ class Sreality
     result.merge! extract_rows nodes
     result['Popis'] = page.search('.row.last .description').first.content
     result['ExternId'] = extract_detail_page_externid(url)
+    # extract images
+    result['Images'] = extract_images(page.search('div#photoThumbContent a'))
     result
   end
 
@@ -150,7 +152,7 @@ class Sreality
   end
 
 
-  def extract_search_page_info(url)
+  def extract_search_page_info(url, sleeptime = 10)
     result = {}
     page = @http_tool.get set_search_url_query_params(url, 'perPage' => 100)
     # firt check the existence of No results node
@@ -253,11 +255,28 @@ class Sreality
       if ['Zlevněno', 'Původní cena', 'Celková cena'].include? desc
         value = row.children()[3].content.match(/(?<price>[\d ]+)/)['price'].gsub(/ /, '').to_i
       elsif desc == 'Datum aktualizace'
-        value = Date.parse(row.children()[3].content)
+        content = row.children()[3].content
+        if content == 'Včera'
+          value = Time.now - 1.day
+        else
+          value = Date.parse()
+        end
       else
         value = row.children()[3].content
       end
       result[desc]=value
+    end
+    result
+  end
+
+  def extract_images nodes
+    result = []
+    nodes.each do |image_tag|
+      nodes.each do |link|
+        image = 'http://img.sreality.cz/big/dyn'+link['id'].gsub(/picdyn/, '')
+        thumbnail = link.children()[0]['src']
+        result << {'image' => image, 'thumbnail' => thumbnail}
+      end
     end
     result
   end
