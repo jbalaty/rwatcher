@@ -22,3 +22,4 @@ public/assets/*
 db/schema.rb
 .env
 *.csv*
+proxy/node_modules

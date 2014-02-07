@@ -1,3 +1,12 @@
+<script type="text/javascript">
+    var mlistener = function (event) {
+        if (event.origin == 'http://sledovani-realit.cz') {
+            alert(window.location.href)
+        }
+    };
+    window.addEventListener('message', mlistener, false);
+</script>
+
 <div class="body">
     <header class="row">
         <div class="columns small-12 large-5">

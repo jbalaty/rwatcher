@@ -27,6 +27,18 @@ Rwatcher.IndexController = Ember.ObjectController.extend(
         iframeUrl: 'http://www.sreality.cz',
         termsAgreement: true,
 
+        init: function () {
+            var self = this
+            window.addEventListener('message', function (event) {
+                if (event.data['msg'] != null) {
+//                    alert('Receiving iframe URL: ' + event.data.value);
+//                controller.set('url', event.data.value);
+                    var u = self.get('url');
+                    self.set('url', event.data.value)
+                }
+            }, false);
+        },
+
         actions: {
             processUrl: function () {
                 var errors = this.get('errors');
@@ -99,6 +111,12 @@ Rwatcher.IndexController = Ember.ObjectController.extend(
                 isVisible = $('#help:visible').length > 0;
                 $('#help').toggle();
                 this.trackEvent('IndexAction', 'ShowHelp', isVisible ? 'hide' : 'show');
+            },
+            getUrl: function () {
+//                $('#iframe').
+                iframe = document.getElementById('iframe')
+                //alert(iframe.contentWindow.location.href);
+                iframe.contentWindow.postMessage('getUrl', '*');
             }
         }
     })
