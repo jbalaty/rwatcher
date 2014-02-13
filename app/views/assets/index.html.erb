@@ -1,12 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
-  <title>Sledování-realit.cz</title>
+  <meta charset="utf-8">
   <meta name="description" content="Sledování inzerátů největšího realitního serveru v ČR. Okamžité informace o nových inzerátech na Váš telefon nebo email.">
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= csrf_meta_tags %>
   <meta name="google-site-verification" content="i8QI1fgIB4WHNhU0sSeu4R3cQTgnPYfejlQjgZ67OhQ" />
+  <title>Sledování-realit.cz</title>
+  <meta property="og:title" content="Sledování-realit.cz"/>
+  <meta property="og:type" content="music"/>
+  <meta property="og:url" content="http://sledovani-realit.cz"/>
+  <meta property="og:image" content="/assets/sledovani-realit.jpg"/>
+  <meta property="og:site_name" content="Sledování realit.cz"/>
+  <!--meta property="fb:admins" content="USER_ID"/-->
+  <meta property="og:description"
+        content="Buďte první, kdo se dozví o nových
+inzerátech bytů a domů."/>
+  <meta property="og:email" content="kontakt@sledovani-realit.cz" />
 </head>
 <body>
   <%= javascript_include_tag "application" %>
