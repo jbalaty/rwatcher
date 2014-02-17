@@ -2,17 +2,18 @@
     <div class="columns">
         <ul class="circle">
             <li>Chcete být informováni jako první?</li>
-            <li>Hledáte velmi specifickou nemovitost? Nechte nás hlídat nabídky realit za Vás</li>
+            <li>Hledáte velmi specifickou nemovitost?</li>
+            <li>Nechte nás hlídat nabídky realit za Vás</li>
             <li>Okamžité informace o nových inzerátech na Váš telefon nebo email</li>
-            <li>Do {{GLOBAL_FREE_LIMIT}} inzerátů zdarma</li>
         </ul>
     </div>
 </div>
 
 <div class="row collapse">
     <div class="columns">
-        <h5 for="url">Zadejte adresu SReality.cz výpisu, který chcete sledovat &nbsp;-&nbsp;
-            více viz <a href="#" {{action 'showHelp'}}><b>nápověda</b></a></h5>
+        <p class="text-center">
+            <a href="#" class="howto-button" {{action 'showHelp'}}>Jak na to?</a>
+        </p>
     </div>
 </div>
 {{#each message in errors}}
@@ -29,7 +30,7 @@
         <span class="prefix">Adresa</span>
     </div>
     <div class="small-8 columns">
-        {{input value=url id="url" placeholder="http://www.sreality.cz/hledani/prodej/domy?price_max=2000000"
+        {{input value=url id="url" placeholder="Zadejte adresu SReality.cz výpisu, který chcete sledovat"
         focus-out="processUrl" insert-newline="processUrl" classBinding="showSummary:disabled"}}
     </div>
     <div class="small-3 columns">

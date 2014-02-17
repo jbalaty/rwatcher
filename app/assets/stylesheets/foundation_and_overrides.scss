@@ -1063,3 +1063,24 @@ small {
 iframe {
   border:0px;
 }
+
+.howto-button {
+  color:red;
+  font-weight: bold;
+  border: 2px solid red;
+  padding: 12px 50px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background-color: red;
+  color:white;
+
+  &:hover {
+    background-color: transparent;
+    color:red;
+  }
+}
+
+ol li {
+  margin-bottom:19px;
+}
