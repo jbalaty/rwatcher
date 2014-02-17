@@ -1075,7 +1075,7 @@ iframe {
   background-color: red;
   color:white;
 
-  &:hover {
+  &:hover, &:active, &:focus {
     background-color: transparent;
     color:red;
   }
