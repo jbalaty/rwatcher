@@ -989,9 +989,30 @@ $header-font-family: "Helvetica", Helvetica, Arial, sans-serif;
 // $topbar-arrows: true; //Set false to remove the triangle icon from the menu item
 @import 'foundation';
 
+html {
+  height:100%;
+}
+body {
+  min-height: 100%;
+}
+
 .body {
   padding:8px;
+  min-height: 100%;
 }
+//.body:before {
+//  background-image: image-url("real-estate.jpg");
+//  background-repeat: no-repeat;
+//  background-position: center 100px;
+//  opacity:0.075;
+//  content: "";
+//  top: 0;
+//  left: 0;
+//  bottom: 0;
+//  right: 0;
+//  position: absolute;
+//  z-index: -1;
+//}
 
 .beta {
   color:red;
