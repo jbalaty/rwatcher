@@ -8,6 +8,7 @@
 </script>
 
 <div class="body">
+
     <header class="row">
         <div class="columns small-12 large-5">
             <h1><a href="/" style="color:inherit;">
@@ -17,12 +18,7 @@
                 </em>
             </a></h1>
         </div>
-
-    </header>
-    {{outlet}}
-    <br/>
-    <footer class="row">
-        <div class="columns text-center">
+        <div class="columns small-12 large-7 text-center">
             <menu>
                 {{#link-to 'index'}}Hlavní stránka{{/link-to}}
                 &nbsp;&nbsp;&nbsp;
@@ -33,6 +29,12 @@
                 {{#link-to 'faq'}}Časté dotazy{{/link-to}}
             </menu>
         </div>
+
+    </header>
+    {{outlet}}
+    <br/>
+    <footer class="row">
+
         <br/>
 
         <div class="columns text-center" style="margin-top:7px;">

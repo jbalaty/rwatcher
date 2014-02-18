@@ -1046,7 +1046,6 @@ td.current{
 .alert-box {
   line-height: 135%;
 
-
   a {
     color: white;
     font-weight: bold;
@@ -1063,8 +1062,13 @@ td.current{
   }
 }
 
-footer a {
+footer a, menu a  {
   color: $body-font-color;
+  font-weight: bold;
+
+  &:hover {
+    color:red;
+  }
 }
 
 b {
@@ -1086,7 +1090,6 @@ iframe {
 }
 
 .howto-button {
-  color:red;
   font-weight: bold;
   border: 2px solid red;
   padding: 9px 70px;
