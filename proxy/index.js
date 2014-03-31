@@ -18,7 +18,7 @@ connect.createServer(
 //      res.setHeader("last-modified", "");
 //      res.setHeader("expires", "");
 //      res.setHeader("cache-control", "0");
-      if (req.headers['accept'].indexOf('text/html') > -1) {
+      if (req.headers['accept'] && req.headers['accept'].indexOf('text/html') > -1) {
           console.log('Adding custom JS script to response');
         res.write = function (data) {
           _write.call(res, data.toString().replace("<head>", "<head><script type=\"text/javascript\">" +
