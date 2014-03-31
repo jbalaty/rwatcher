@@ -24,7 +24,7 @@ Rwatcher.IndexController = Ember.ObjectController.extend(
         showConfirmation: false,
         showPayedWarning: false,
         adsCount: 0,
-        iframeUrl: 'http://proxy.sledovani-realit.cz:8113',
+        iframeUrl: 'http://prx.sledovani-realit.cz',
         termsAgreement: true,
 
         init: function () {

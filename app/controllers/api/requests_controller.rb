@@ -119,7 +119,7 @@ class API::RequestsController < ApplicationController
     sreality = Sreality.new http_tool
     if url !~ URI::regexp
       errors << "Nesprávná url adresa, zkontrolujte, zda-li začíná znaky \"http://\""
-    elsif url =~ /^http:\/\/www.sreality.cz\/?/
+    elsif url =~ /^http:\/\/www.sreality.cz\/?$/
       errors << "Nelze sledovat všechny nemovitosti, nejdříve vyberte typ nemovitosti níže - např. Prodej bytů"
     elsif !sreality.is_url_valid?(url)
       errors << "Nesprávná url - můžete zadat pouze adresu vedoucí na server Sreality.cz,
