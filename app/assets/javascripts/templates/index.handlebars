@@ -1,21 +1,3 @@
-<div class="row collapse">
-    <div class="columns">
-        <ul class="circle">
-            <li>Chcete být informováni jako první?</li>
-            <li>Hledáte velmi specifickou nemovitost?</li>
-            <li>Nechte nás hlídat nabídky realit za Vás</li>
-            <li>Okamžité informace o nových inzerátech na Váš telefon nebo email</li>
-        </ul>
-    </div>
-</div>
-
-<div class="row collapse">
-    <div class="columns">
-        <p class="text-center">
-            <a href="#" class="howto-button" {{action 'showHelp'}}>Jak na to?</a>
-        </p>
-    </div>
-</div>
 {{#each message in errors}}
 <div class="row">
     <div class="columns">
@@ -26,21 +8,10 @@
 </div>
 {{/each}}
 <div class="row collapse">
-    <div class="small-1 columns">
-        <span class="prefix">Adresa</span>
-    </div>
-    <div class="small-8 columns">
-        {{input value=url id="url" placeholder="Zadejte adresu SReality.cz výpisu, který chcete sledovat"
-        focus-out="processUrl" insert-newline="processUrl" classBinding="showSummary:disabled"}}
-    </div>
-    <div class="small-3 columns">
-        {{#if showSummary}}
-        <button
-        {{action 'processUrl'}} class="button postfix">Změnit</button>
-        {{else}}
-        <button
-        {{action 'processUrl'}} class="button postfix black">Sledovat</button>
-        {{/if}}
+    <div class="columns">
+        <p class="text-center">
+            <a href="#" class="howto-button" {{action 'processUrl'}}>Sledovat tento výpis</a>
+        </p>
     </div>
 </div>
 
@@ -49,11 +20,11 @@
     <div class="columns">
         <div data-alert class="alert-box">
             Na <a {{ bind-attr href=url }} target="_blank">zadané adrese</a> jsme nalezli
-            <strong>{{ adsCount }} inzerátů</strong>.
+            <strong>{{ adsCount }} nemovitostí</strong>.
         </div>
         <div data-alert class="alert-box warning">
             <strong>
-                Do {{GLOBAL_FREE_LIMIT}} inzerátů je naše služba zcela zdarma, pokud chcete sledovat více
+                Do {{GLOBAL_FREE_LIMIT}} nemovitostí je naše služba zcela zdarma, pokud chcete sledovat více
                 inzerátů,
                 je třeba si u nás objednat placený tarif. Více viz {{#link-to 'pricelist'
                 }}Ceník{{/link-to}}.<br/>
@@ -90,10 +61,6 @@
             <a {{action 'showTerms'}}>smluvními podmínkami služby</a></label>
     </div>
 </div>
-{{/if}}
-
-
-
 <div id="help" class="row panel" style="display:none;">
     <div class="columns">
         <a class="close-reveal-modal right" {{action 'showHelp'}}>&#215;</a>
@@ -110,16 +77,12 @@
     </div>
     <a {{action 'hideTerms'}} class="close-reveal-modal">&#215;</a>
 </div>
+
+{{/if}}
+<div class="top-bar"></div>
 <div class="row collapse">
-    <div class="columns text-center">
-        <img style="width:60%; height: auto;" {{bind-attr src=assets.real_estate}}>
+    <div class="columns">
+        <iframe id="iframe" {{ bind-attr src=iframeUrl }} style="width:100%; height: 1600px;"></iframe>
     </div>
 </div>
-<!--<div class="row collapse">-->
-<!--<div class="columns">-->
-<!--<button-->
-<!--{{action 'getUrl'}}>test</button>-->
-<!--<iframe id="iframe" src="http://localhost:8013" style="width:100%; height: 1600px;"></iframe>-->
-<!--</div>-->
-<!--</div>-->
 

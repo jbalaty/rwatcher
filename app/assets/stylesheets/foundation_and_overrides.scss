@@ -997,7 +997,7 @@ body {
 }
 
 .body {
-  padding:8px;
+  //padding:8px;
   min-height: 100%;
 }
 //.body:before {
@@ -1107,4 +1107,18 @@ iframe {
 
 ol li {
   margin-bottom:19px;
+}
+
+.top-bar {
+  height: 10px;
+  border-bottom:0px solid red;
+  background-color: transparent;
+  margin-bottom:20px;
+  -webkit-box-shadow: 0px 10px 8px 0px rgba(50, 50, 50, 0.3);
+  -moz-box-shadow:    0px 10px 8px 0px rgba(50, 50, 50, 0.3);
+  box-shadow:         0px 10px 8px 0px rgba(50, 50, 50, 0.3);
+
+  &:before, &:after {
+    display:none;
+  }
 }

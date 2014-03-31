@@ -24,7 +24,7 @@ Rwatcher.IndexController = Ember.ObjectController.extend(
         showConfirmation: false,
         showPayedWarning: false,
         adsCount: 0,
-        iframeUrl: 'http://www.sreality.cz',
+        iframeUrl: 'http://localhost:8113',
         termsAgreement: true,
 
         init: function () {
@@ -33,39 +33,46 @@ Rwatcher.IndexController = Ember.ObjectController.extend(
                 if (event.data['msg'] != null) {
 //                    alert('Receiving iframe URL: ' + event.data.value);
 //                controller.set('url', event.data.value);
-                    var u = self.get('url');
-                    self.set('url', event.data.value)
+                    var u = 'http://www.sreality.cz' + event.data.value;
+                    self.set('url', u);
+                    self.processUrl();
                 }
             }, false);
         },
 
+        processUrl: function () {
+            console.log('processing url: ' + this.get('url'));
+            var errors = this.get('errors');
+            this.set('showSummary', false);
+            var inputUrl = this.get('url');
+            var self = this;
+            // validate
+            // track this event
+            this.trackEvent('IndexAction', 'ProccessUrl', inputUrl);
+            Ember.$.getJSON('/api/url-info', {url: inputUrl}).then(function (data) {
+                errors.clear();
+                self.set('adsCount', data.total);
+//                self.set('showPayedWarning', data.tarrif.toLowerCase().indexOf('free') < 0);
+                self.set('showPayedWarning', true);
+                if (data.tarrif.toLowerCase().indexOf('free') > -1) {
+                    self.set('payedAmount', '0 Kč');
+                } else if (data.tarrif.toLowerCase().indexOf('individual') > -1) {
+                    self.set('payedAmount', 'individuální, po založení sledování Vás budeme kontaktovat');
+                } else {
+                    self.set('payedAmount', data.tarrif_parsed[1] + ' Kč');
+                }
+                self.set('showSummary', true);
+                //Ember.$('#email').focus(); does not work
+            }, function (reason) {
+                errors.clear();
+                errors.pushObjects(reason.responseJSON.errors);
+            })
+        },
+
         actions: {
             processUrl: function () {
-                var errors = this.get('errors');
-                this.set('showSummary', false);
-                var inputUrl = this.get('url');
-                var self = this;
-                // validate
-                // track this event
-                this.trackEvent('IndexAction', 'ProccessUrl', inputUrl);
-                Ember.$.getJSON('/api/url-info', {url: inputUrl}).then(function (data) {
-                    errors.clear();
-                    self.set('adsCount', data.total);
-//                self.set('showPayedWarning', data.tarrif.toLowerCase().indexOf('free') < 0);
-                    self.set('showPayedWarning', true);
-                    if (data.tarrif.toLowerCase().indexOf('free') > -1) {
-                        self.set('payedAmount', '0 Kč');
-                    } else if (data.tarrif.toLowerCase().indexOf('individual') > -1) {
-                        self.set('payedAmount', 'individuální, po založení sledování Vás budeme kontaktovat');
-                    } else {
-                        self.set('payedAmount', data.tarrif_parsed[1] + ' Kč');
-                    }
-                    self.set('showSummary', true);
-                    //Ember.$('#email').focus(); does not work
-                }, function (reason) {
-                    errors.clear();
-                    errors.pushObjects(reason.responseJSON.errors);
-                })
+                var iframe = document.getElementById('iframe')
+                iframe.contentWindow.postMessage('getUrl', '*');
             },
             submit: function () {
                 var self = this;
@@ -113,9 +120,7 @@ Rwatcher.IndexController = Ember.ObjectController.extend(
                 this.trackEvent('IndexAction', 'ShowHelp', isVisible ? 'hide' : 'show');
             },
             getUrl: function () {
-//                $('#iframe').
-                iframe = document.getElementById('iframe')
-                //alert(iframe.contentWindow.location.href);
+                var iframe = document.getElementById('iframe')
                 iframe.contentWindow.postMessage('getUrl', '*');
             }
         }

@@ -16,7 +16,7 @@ function isEmailValid(email) {
     return true;
 }
 
-Rwatcher.IndexController = Ember.ObjectController.extend(
+Rwatcher.CustomurlController = Ember.ObjectController.extend(
     Ember.GoogleAnalyticsTrackingMixin, {
         assets: Rwatcher.Assets,
         errors: [],
@@ -111,19 +111,6 @@ Rwatcher.IndexController = Ember.ObjectController.extend(
                 isVisible = $('#help:visible').length > 0;
                 $('#help').toggle();
                 this.trackEvent('IndexAction', 'ShowHelp', isVisible ? 'hide' : 'show');
-            },
-            getUrl: function () {
-//                $('#iframe').
-                iframe = document.getElementById('iframe')
-                //alert(iframe.contentWindow.location.href);
-                iframe.contentWindow.postMessage('getUrl', '*');
             }
         }
     })
-/**
- * Created with JetBrains RubyMine.
- * User: balwan
- * Date: 1/9/14
- * Time: 1:12 AM
- * To change this template use File | Settings | File Templates.
- */
