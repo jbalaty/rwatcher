@@ -19,11 +19,11 @@ connect.createServer(
 //      res.setHeader("expires", "");
 //      res.setHeader("cache-control", "0");
       if (req.headers['accept'].indexOf('text/html') > -1) {
-        console.log('Adding custom JS script to response');
+          console.log('Adding custom JS script to response');
         res.write = function (data) {
           _write.call(res, data.toString().replace("<head>", "<head><script type=\"text/javascript\">" +
               " var mlistener = function(event){ " +
-              " debugger;" +
+//              " debugger;" +
               " if(event.origin == 'http://sledovani-realit.cz' || event.origin == 'http://localhost:3000') {" +
               "   event.source.postMessage({msg:'setUrl',value:window.location.pathname+" +
               "    window.location.search}, event.origin);" +

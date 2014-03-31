@@ -19,24 +19,20 @@
 <div class="row">
     <div class="columns">
         <div data-alert class="alert-box">
-            Na <a {{ bind-attr href=url }} target="_blank">zadané adrese</a> jsme nalezli
+            Na <a {{ bind-attr href=url }} target="_blank">tomto výpisu</a> evidujeme
             <strong>{{ adsCount }} nemovitostí</strong>.
-        </div>
-        <div data-alert class="alert-box warning">
+            <br/>
+            Do {{GLOBAL_FREE_LIMIT}} nemovitostí je naše služba zcela zdarma, pokud chcete sledovat více
+            nemovitostí, je třeba si u nás objednat placený tarif. Více viz {{#link-to 'pricelist'
+            }}Ceník{{/link-to}}.<br/>
+            <br/>
             <strong>
-                Do {{GLOBAL_FREE_LIMIT}} nemovitostí je naše služba zcela zdarma, pokud chcete sledovat více
-                inzerátů,
-                je třeba si u nás objednat placený tarif. Více viz {{#link-to 'pricelist'
-                }}Ceník{{/link-to}}.<br/>
                 {{#if showPayedWarning}}
                 Cena Vašeho sledování: {{payedAmount}}
                 {{else}}
 
                 {{/if}}
             </strong>
-        </div>
-        <div data-alert class="alert-box">
-            Pokud chcete tyto inzeráty sledovat, zadejte Váš e-mail a odešlete.<br/>
         </div>
     </div>
 </div>
@@ -46,7 +42,7 @@
         <span class="prefix">Email</span>
     </div>
     <div class="small-8 columns">
-        {{input value=email id="email" placeholder="vaše e-mailová adresa, např. pepa.vomacka@seznam.cz"
+        {{input value=email id="email" placeholder="zadejte e-mailovou adresu, na kterou chcete zasílat upozornění"
         insert-newline="submit"}}
     </div>
     <div class="small-3 columns">
@@ -82,7 +78,8 @@
 <div class="top-bar"></div>
 <div class="row collapse">
     <div class="columns">
-        <iframe id="iframe" {{ bind-attr src=iframeUrl }} style="width:100%; height: 1600px;"></iframe>
+        <iframe id="iframe"
+        {{ bind-attr src=iframeUrl }} style="width:100%; height: 1600px;"></iframe>
     </div>
 </div>
 
