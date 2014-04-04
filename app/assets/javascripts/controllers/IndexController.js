@@ -115,8 +115,8 @@ Rwatcher.IndexController = Ember.ObjectController.extend(
                 $('#terms').foundation('reveal', 'close', '#about');
             },
             showHelp: function () {
-                isVisible = $('#help:visible').length > 0;
                 $('#help').toggle();
+                isVisible = $('#help:visible').length > 0;
                 this.trackEvent('IndexAction', 'ShowHelp', isVisible ? 'hide' : 'show');
             },
             getUrl: function () {

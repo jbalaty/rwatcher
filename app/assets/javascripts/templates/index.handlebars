@@ -15,6 +15,14 @@
     </div>
 </div>
 
+<div class="row collapse">
+    <div class="columns">
+        <p class="text-center">
+            <a href="#" class="" {{action 'showHelp'}}>Jak na to?</a>
+        </p>
+    </div>
+</div>
+
 {{#if showSummary}}
 <div class="row">
     <div class="columns">
@@ -57,12 +65,7 @@
             <a {{action 'showTerms'}}>smluvními podmínkami služby</a></label>
     </div>
 </div>
-<div id="help" class="row panel" style="display:none;">
-    <div class="columns">
-        <a class="close-reveal-modal right" {{action 'showHelp'}}>&#215;</a>
-        {{partial 'help'}}
-    </div>
-</div>
+
 
 <div id="terms" class="reveal-modal" data-reveal>
     <div class="panel">
@@ -75,6 +78,13 @@
 </div>
 
 {{/if}}
+<div id="help" class="row panel" style="display:none;">
+    <div class="columns">
+        <a class="close-reveal-modal right" {{action 'showHelp'}}>&#215;</a>
+        {{partial 'help2'}}
+    </div>
+</div>
+
 <div class="top-bar"></div>
 <div class="row collapse">
     <div class="columns">
