@@ -62,6 +62,7 @@ class Sreality
     result['ExternId'] = extract_detail_page_externid(url)
     # extract images
     result['Images'] = extract_images(page.search('div#photoThumbContent a'))
+    result['Gps'] = extract_gps(page.search('div#mapContainer a#fullMap'))
     result
   end
 
@@ -277,6 +278,17 @@ class Sreality
         thumbnail = link.children()[0]['src']
         result << {'image' => image, 'thumbnail' => thumbnail}
       end
+    end
+    result
+  end
+
+  def extract_gps node
+    result = nil
+    mapUrl = node.first()['href']
+    if mapUrl
+      x = mapUrl.match(/x=([\d.]+)/)[1]
+      y = mapUrl.match(/y=([\d.]+)/)[1]
+      result = {'lat' => x, 'lon' => y}
     end
     result
   end

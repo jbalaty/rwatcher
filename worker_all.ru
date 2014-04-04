@@ -54,8 +54,26 @@ def write_csv_header(csv)
       'Energetická náročnost budovy: Energetická náročnost budov',
       'Půdní vestavba',
       nil,
-      'Popis'
+      'Popis',
+      nil,
+      'Lat',
+      'Lon'
   ]
+end
+
+def transform_value(value)
+  result = value.clone
+  keys = ['Garáž']
+  keys.each do |k|
+    if result[k]
+      result[k] = if result[k] == 'Ano' then
+                    '1'
+                  else
+                    '0'
+                  end
+    end
+  end
+  result
 end
 
 def puts_divider
@@ -91,7 +109,9 @@ data_urls = []
 # SReality - byty
 #data_urls << 'http://www.sreality.cz/search?category_type_cb=1&category_main_cb=1&price_min=&price_max=&region=&distance=0&usable_area-min=&usable_area-max=&floor_number-min=&floor_number-max=&age=0&extension=0&sort=0&perPage=10&hideRegions=0&discount=-1'
 #data_urls << 'http://www.sreality.cz/search?category_type_cb=1&category_main_cb=1&sub%5B%5D=2&price_min=&price_max=&region=&distance=0&usable_area-min=&usable_area-max=&floor_number-min=&floor_number-max=&age=0&extension=0&sort=0&perPage=30&hideRegions=0&discount=-1'
-data_urls << 'http://www.sreality.cz/search?category_type_cb=1&category_main_cb=1&sub%5B%5D=2&price_min=&price_max=&region=&distance=0&rg%5B%5D=10&dt%5B%5D=5002&usable_area-min=&usable_area-max=&floor_number-min=&floor_number-max=&age=0&extension=0&sort=0&perPage=30&hideRegions=0&discount=-1'
+#data_urls << 'http://www.sreality.cz/search?category_type_cb=1&category_main_cb=1&sub%5B%5D=2&price_min=&price_max=&region=&distance=0&rg%5B%5D=10&dt%5B%5D=5002&usable_area-min=&usable_area-max=&floor_number-min=&floor_number-max=&age=0&extension=0&sort=0&perPage=30&hideRegions=0&discount=-1'
+# production urls
+data_urls << 'http://www.sreality.cz/search?category_type_cb=1&category_main_cb=1&price_min=&price_max=&region=&distance=0&rg%5B%5D=10&usable_area-min=20&usable_area-max=90&floor_number-min=&floor_number-max=&age=0&extension=1&sort=0&perPage=10&hideRegions=0&discount=-1'
 sreality = Sreality.new @http_tool
 data_urls.each do |url|
   begin
@@ -128,6 +148,7 @@ data_urls.each do |url|
     CSV.open("data_all.csv", "wb") do |csv|
       write_csv_header csv
       ad_details.each do |k, v|
+        v = transform_value v
         record = [
             v['ExternId'],
             v['Název'],
@@ -169,7 +190,9 @@ data_urls.each do |url|
             v['Půdní vestavba'],
             nil,
             v['Popis'],
-            nil
+            nil,
+            v['Gps']['lat'],
+            v['Gps']['lon']
         ]
         if v['Images']
           v['Images'].each { |image| record << image['image'] }
