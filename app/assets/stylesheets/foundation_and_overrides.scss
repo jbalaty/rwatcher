@@ -999,6 +999,14 @@ body {
 .body {
   //padding:8px;
   min-height: 100%;
+  //background-color:red;
+}
+
+
+.body iframe {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
 }
 //.body:before {
 //  background-image: image-url("real-estate.jpg");

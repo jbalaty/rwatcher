@@ -1,95 +1,97 @@
-{{#each message in errors}}
-<div class="row">
-    <div class="columns">
-        <div data-alert class="alert-box error">
-            {{ message }}
+<div>
+    {{#each message in errors}}
+    <div class="row">
+        <div class="columns">
+            <div data-alert class="alert-box error">
+                {{ message }}
+            </div>
         </div>
     </div>
-</div>
-{{/each}}
-<div class="row collapse">
-    <div class="columns">
-        <p class="text-center">
-            <a href="#" class="howto-button" {{action 'processUrl'}}>Sledovat tento výpis</a>
-        </p>
-    </div>
-</div>
+    {{/each}}
 
-<div class="row collapse">
-    <div class="columns">
-        <p class="text-center">
-            <a href="#" class="" {{action 'showHelp'}}>Jak na to?</a>
-        </p>
-    </div>
-</div>
 
-{{#if showSummary}}
-<div class="row">
-    <div class="columns">
-        <div data-alert class="alert-box">
-            Na <a {{ bind-attr href=url }} target="_blank">tomto výpisu</a> evidujeme
-            <strong>{{ adsCount }} nemovitostí</strong>.
-            <br/>
-            Do {{GLOBAL_FREE_LIMIT}} nemovitostí je naše služba zcela zdarma, pokud chcete sledovat více
-            nemovitostí, je třeba si u nás objednat placený tarif. Více viz {{#link-to 'pricelist'
-            }}Ceník{{/link-to}}.<br/>
-            <br/>
-            <strong>
-                {{#if showPayedWarning}}
-                Cena Vašeho sledování: {{payedAmount}}
-                {{else}}
-
-                {{/if}}
-            </strong>
+    <div class="row collapse">
+        <div class="columns">
+            <p class="text-center">
+                <a href="#" class="" {{action 'showHelp'}}>Jak na to?</a>
+            </p>
         </div>
     </div>
-</div>
-
-<div class="row collapse">
-    <div class="small-1 columns">
-        <span class="prefix">Email</span>
-    </div>
-    <div class="small-8 columns">
-        {{input value=email id="email" placeholder="zadejte e-mailovou adresu, na kterou chcete zasílat upozornění"
-        insert-newline="submit"}}
-    </div>
-    <div class="small-3 columns">
-        <button
-        {{action 'submit'}} class="button postfix">Začít sledovat</button>
-    </div>
-</div>
-<div class="row collapse">
-    <div class="columns small-offset-1">
-        {{input type="checkbox" id="termsAgreement" checked=termsAgreement}}
-        <label for="termsAgreement">souhlasím se
-            <a {{action 'showTerms'}}>smluvními podmínkami služby</a></label>
-    </div>
-</div>
-
-
-<div id="terms" class="reveal-modal" data-reveal>
-    <div class="panel">
-        {{partial 'terms'}}
-        <div class="text-center">
-            <a {{action 'hideTerms'}} class="button">Ok, chápu</a>
+    <div class="row collapse">
+        <div class="columns">
+            <p class="text-center">
+                <a href="#" class="howto-button" {{action 'processUrl'}}>Sledovat tento výpis</a>
+            </p>
         </div>
     </div>
-    <a {{action 'hideTerms'}} class="close-reveal-modal">&#215;</a>
-</div>
 
-{{/if}}
-<div id="help" class="row panel" style="display:none;">
-    <div class="columns">
-        <a class="close-reveal-modal right" {{action 'showHelp'}}>&#215;</a>
-        {{partial 'help2'}}
-    </div>
-</div>
+    {{#if showSummary}}
+    <div class="row">
+        <div class="columns">
+            <div data-alert class="alert-box">
+                Na <a {{ bind-attr href=url }} target="_blank">tomto výpisu</a> evidujeme
+                <strong>{{ adsCount }} nemovitostí</strong>.
+                <br/>
+                Do {{GLOBAL_FREE_LIMIT}} nemovitostí je naše služba zcela zdarma, pokud chcete sledovat více
+                nemovitostí, je třeba si u nás objednat placený tarif. Více viz {{#link-to 'pricelist'
+                }}Ceník{{/link-to}}.<br/>
+                <br/>
+                <strong>
+                    {{#if showPayedWarning}}
+                    Cena Vašeho sledování: {{payedAmount}}
+                    {{else}}
 
-<div class="top-bar"></div>
-<div class="row collapse">
-    <div class="columns">
-        <iframe id="iframe"
-        {{ bind-attr src=iframeUrl }} style="width:100%; height: 1600px;"></iframe>
+                    {{/if}}
+                </strong>
+            </div>
+        </div>
     </div>
-</div>
+
+    <div class="row collapse">
+        <div class="small-1 columns">
+            <span class="prefix">Email</span>
+        </div>
+        <div class="small-8 columns">
+            {{input value=email id="email" placeholder="zadejte e-mailovou adresu, na kterou chcete zasílat upozornění"
+            insert-newline="submit"}}
+        </div>
+        <div class="small-3 columns">
+            <button
+            {{action 'submit'}} class="button postfix">Začít sledovat</button>
+        </div>
+    </div>
+    <div class="row collapse">
+        <div class="columns small-offset-1">
+            {{input type="checkbox" id="termsAgreement" checked=termsAgreement}}
+            <label for="termsAgreement">souhlasím se
+                <a {{action 'showTerms'}}>smluvními podmínkami služby</a></label>
+        </div>
+    </div>
+
+
+    <div id="terms" class="reveal-modal" data-reveal>
+        <div class="panel">
+            {{partial 'terms'}}
+            <div class="text-center">
+                <a {{action 'hideTerms'}} class="button">Ok, chápu</a>
+            </div>
+        </div>
+        <a {{action 'hideTerms'}} class="close-reveal-modal">&#215;</a>
+    </div>
+
+    {{/if}}
+    <div id="help" class="row panel" style="display:none;">
+        <div class="columns">
+            <a class="close-reveal-modal right" {{action 'showHelp'}}>&#215;</a>
+            {{partial 'help2'}}
+        </div>
+    </div>
+
+    <div class="top-bar"></div>
+    <div class="row collapse">
+        <div class="columns">
+            <iframe id="iframe"
+            {{ bind-attr src=iframeUrl }} style="width:100%; height: 1600px;"></iframe>
+        </div>
+    </div>
 
